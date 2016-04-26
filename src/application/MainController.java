@@ -98,6 +98,8 @@ public class MainController {
 
 					String t = Integer.toString(time);
 					String s = Integer.toString(score);
+					String c = Integer.toString(Player.calories);
+
 					if (time == 97 || time == 90) {
 						if (!littleMonsterExisted) {
 							Start2(null);
@@ -111,7 +113,8 @@ public class MainController {
 						@Override
 						public void run() {
 							l_timer.setText(t);
-				//			l_score.setText("Score: " + s);
+							l_cleft.setText(c);
+							//l_score.setText("Score: " + s);
 							// Control Monster
 							direction = monster.Get_Direction(Player.PlayerX, Player.PlayerY);
 							location = monster.GetNewLocation(direction, monster);
