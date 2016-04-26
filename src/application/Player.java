@@ -3,11 +3,18 @@ package application;
 public class Player extends Moveable {
 	public static int PlayerX;
 	public static int PlayerY;
-
-	public Player() {
+	public static int nougat;
+	public static int calories;
+	public static int calories_cost;
+    public static boolean result;
+    
+	public Player(int c, int c_c, int n) {
 		PlayerX = 0;
 		PlayerY = 0;
-	//	MainController.cell[PlayerX][PlayerY].setStyle(MainController.stylePlayer);
+		nougat = n;
+		calories = c;
+		calories_cost = c_c;
+		//MainController.cell[PlayerX][PlayerY].setStyle(MainController.stylePlayer);
 	}
 
 	@Override
