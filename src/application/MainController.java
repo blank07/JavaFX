@@ -21,8 +21,8 @@ public class MainController {
 	private Label l_timer;
 	@FXML
 	private Pane borderContainer;
-	@FXML
-	private Label l_score;
+//	@FXML
+//	private Label l_score;
 
 	@FXML
 	public Label gresult;
@@ -111,7 +111,7 @@ public class MainController {
 						@Override
 						public void run() {
 							l_timer.setText(t);
-							l_score.setText("Score: " + s);
+				//			l_score.setText("Score: " + s);
 							// Control Monster
 							direction = monster.Get_Direction(Player.PlayerX, Player.PlayerY);
 							location = monster.GetNewLocation(direction, monster);
