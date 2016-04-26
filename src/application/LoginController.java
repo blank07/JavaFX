@@ -20,7 +20,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
-
 public class LoginController {
 	
 	@FXML
@@ -29,6 +28,10 @@ public class LoginController {
 	private TextField uname;
 	@FXML
 	private PasswordField pword;
+	
+	public static String LoginUser;
+	public static String LoginUserScore;
+	public static int LoginUserId;
 
 	public void LoginWithDB(ActionEvent e) throws IOException, SQLException {
 		
@@ -51,6 +54,17 @@ public class LoginController {
 					result= "Wrong Password";
 					if(passwordL.toString().equals(myRs.getString("password"))){
 						result = "Succeed";
+						LoginUser = usernameL.toString();
+						Statement myStmt2 = myConn.createStatement();
+						ResultSet myRs2 = myStmt2.executeQuery("select score from sc.logindb where username = '"+LoginUser+"'");
+						if(myRs2.next()){
+							LoginUserScore = myRs2.getString("score");
+						}
+						Statement myStmt3 = myConn.createStatement();
+						ResultSet myRs3 = myStmt3.executeQuery("select id from sc.logindb where username = '"+LoginUser+"'");
+						if(myRs3.next()){
+							LoginUserId = myRs3.getInt("id");
+						}
 						
 						Main.primaryStageLogin.hide();
 						Stage gameStage = new Stage();
@@ -62,7 +76,6 @@ public class LoginController {
 						gameStage.setScene(scene);
 						gameStage.show();
 						MainController.setInitialStyle();
-					
 					}
 					break;
 				}else{

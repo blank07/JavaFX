@@ -53,5 +53,10 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
+      <Label fx:id="newHighScore" layoutX="648.0" layoutY="480.0" prefHeight="35.0" prefWidth="154.0" textFill="#0ed72c">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

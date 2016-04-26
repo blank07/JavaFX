@@ -1,5 +1,9 @@
 package application;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +20,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class MainController {
-
+	
 	@FXML
 	private Label l_timer;
 	@FXML
@@ -25,6 +29,8 @@ public class MainController {
 	private Label l_score;
 	@FXML
 	private Label h_score;
+	@FXML
+	private Label newHighScore;
 	@FXML
 	public Label gresult;
 	@FXML
@@ -43,6 +49,7 @@ public class MainController {
 	private RadioButton r_medium;
 	@FXML
 	private RadioButton r_fast;
+	
 
 	public static int calories = 60;
 	public static int calories_cost = 2;
@@ -78,7 +85,7 @@ public class MainController {
 		MainController.cell[Player.PlayerX][Player.PlayerY].setStyle(stylePlayer);
 		MainController.cell[Monster.MonsterInitialX][Monster.MonsterInitialY].setStyle(styleMonster);
 	}
-
+	
 	public void Start(ActionEvent event2) {
 		// Create Player and Monster
 		t1 = new Thread(new Runnable() {
@@ -122,6 +129,11 @@ public class MainController {
 			}
 		});
 		t1.start();
+		try{
+			h_score.setText(LoginController.LoginUserScore);
+		}catch(Exception e){
+			
+		}
 		playerCanMove = true;
 	}
 
@@ -191,6 +203,7 @@ public class MainController {
 				player.Cell_Move(x, y);
 			else {
 				gresult.setText("No Enough Energy. Game Over!");
+				gameOver();
 				return;
 			}
 		}else{
@@ -208,6 +221,7 @@ public class MainController {
 				player.Cell_Move(x, y);
 			else {
 				gresult.setText("No Enough Energy. Game Over!");
+				gameOver();
 				return;
 			}
 		}else{
@@ -225,6 +239,7 @@ public class MainController {
 				player.Cell_Move(x, y);
 			else {
 				gresult.setText("No Enough Energy. Game Over!");
+				gameOver();
 				return;
 			}
 		}else{
@@ -242,6 +257,7 @@ public class MainController {
 				player.Cell_Move(x, y);
 			else {
 				gresult.setText("No Enough Energy. Game Over!");
+				gameOver();
 				return;
 			}
 		}else{
@@ -295,6 +311,7 @@ public class MainController {
 
 	public void Pause() {
 		try {
+			playerCanMove = false;
 			t1.suspend();
 			t2.suspend();
 		} catch (Exception e) {
@@ -304,6 +321,7 @@ public class MainController {
 
 	public void Resume() {
 		try {
+			playerCanMove = true;
 			t1.resume();
 			t2.resume();
 		} catch (Exception e) {
@@ -322,6 +340,7 @@ public class MainController {
 
 	public void checkResult() {
 		if (Player.PlayerX == monster.MonsterX && Player.PlayerY == monster.MonsterY) {
+			gresult.setText("You Caught by Monster. Game Over!");
 			gameOver();
 		}
 		if (Player.PlayerX == childMonster.MonsterX && Player.PlayerY == childMonster.MonsterY) {
@@ -332,18 +351,42 @@ public class MainController {
 				} catch (Exception e) {
 				}
 			} else {
+				gresult.setText("You Caught by Monster. Game Over!");
 				gameOver();
 			}
 
 		}
 	}
 	
+	public void saveScore(){
+			if(Integer.parseInt(l_score.getText())>Integer.parseInt(h_score.getText())){
+				
+			try{	
+				String url = "jdbc:mysql://localhost:3306/sc?useSSL=false";
+				String usernameDB = "root";
+				String passwordDB = "password";
+				Connection myConn = DriverManager.getConnection(url, usernameDB, passwordDB);
+				Statement myStmt = myConn.createStatement();
+				myStmt.executeUpdate("update sc.logindb set score = '"+l_score.getText().toString()+"' where id = "+LoginController.LoginUserId+";");
+				newHighScore.setText("New High Score!!");
+			
+			}catch(Exception e){
+
+			}
+			
+		}
+		
+	}
 	public void gameOver(){
 		playerCanMove = false;
-		gresult.setText("You Caught by Monster. Game Over!");
 		try{
 			t1.stop();
 			t2.stop();
+		}catch(Exception Ex){
+			
+		}
+		try{
+			saveScore();
 		}catch(Exception E){
 			
 		}

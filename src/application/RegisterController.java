@@ -75,9 +75,9 @@ public class RegisterController {
 					idMax = maxId.getInt("max(id)");
 				}
 				idMax++;
-				String sql = "insert into sc.LoginDB " + " (id,username,password,name,address)" + " values (" + idMax + ",'"
+				String sql = "insert into sc.LoginDB " + " (id,username,password,name,address,score)" + " values (" + idMax + ",'"
 						+ usernameR.toString() + "','" + passwordR.toString() +"','" + nameR.toString() + "','" 
-						+ addressR.toString()+ "')";
+						+ addressR.toString()+ "','" + "0" +"')";
 				myStmt.executeUpdate(sql);
 				result = "Succeed";
 
