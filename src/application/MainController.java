@@ -3,13 +3,17 @@ package application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
-
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 
 public class MainController {
@@ -22,10 +26,42 @@ public class MainController {
 	@FXML
 	private Label l_score;
 
+	@FXML
+	public Label gresult;
+
+	@FXML
+	private Label l_cleft;
+	
+	@FXML
+	private TextField tf_duration;
+
+	@FXML
+	private TextField tf_calories;
+
+	@FXML
+	private TextField tf_cal_cost;
+
+	@FXML
+	private TextField tf_cal_nougat;
+
+	@FXML
+	private RadioButton r_slow;
+
+	@FXML
+	private RadioButton r_medium;
+
+	@FXML
+	private RadioButton r_fast;
+
 	public static Pane cell[][] = new Pane[11][11];
 	public static Player player= new Player();
 	public static Monster monster = new Monster();
 	public static Monster childMonster= new Monster();
+	
+	public static int calories = 60;
+	public static int calories_cost = 2;
+	public static int nougat = 6;
+	public static int duration = 100;
 
 	public static final String styleMonster = "-fx-background-color : green;-fx-border-color : black";
 	public static final String stylePlayer = "-fx-background-color : yellow;-fx-border-color : black";
@@ -192,8 +228,49 @@ public class MainController {
 	}
 
 
-	public void Setting(ActionEvent event) throws Exception {
+	public void Save(ActionEvent event1) {
+		System.out.println(" Saving...");
 
+		// Duration
+		if (tf_duration.getText() != null) {
+			String temp = tf_duration.getText();
+			duration = Integer.parseInt(temp);
+		}
+
+		// Initial Calories
+		if (tf_calories.getText() != null) {
+			String temp = tf_calories.getText();
+			calories = Integer.parseInt(temp);
+		}
+
+		// Calories cost
+		if (tf_cal_cost.getText() != null) {
+			String temp = tf_cal_cost.getText();
+			calories_cost = Integer.parseInt(temp);
+		}
+
+		// Calories per nougat
+		if (tf_cal_nougat.getText() != null) {
+			String temp = tf_cal_nougat.getText();
+			nougat = Integer.parseInt(temp);
+		}
+
+		// Monster Step speed
+		if (r_slow.isSelected()) {
+		}
+		if (r_medium.isSelected()) {
+		}
+		if (r_fast.isSelected()) {
+		}
+	}
+	
+	public void Setting(ActionEvent event) throws Exception {
+		Stage primaryStage = new Stage();
+		Parent root = FXMLLoader.load(getClass().getResource("/application/Setting.fxml"));
+		Scene scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		primaryStage.setScene(scene);
+		primaryStage.show();
 	}
 
 
