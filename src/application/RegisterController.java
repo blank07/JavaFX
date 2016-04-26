@@ -12,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
-
 public class RegisterController {
 	
 	@FXML
@@ -25,8 +24,6 @@ public class RegisterController {
 	private TextField nam;
 	@FXML
 	private TextField addr;
-	
-	
 	
 	public void signup(ActionEvent e) throws IOException {
 		try {
