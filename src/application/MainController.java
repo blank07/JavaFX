@@ -21,7 +21,7 @@ public class MainController {
 	private Label l_timer;
 	@FXML
 	private Pane borderContainer;
-	
+
 	@FXML
 	private Label l_score;
 	@FXML
@@ -75,6 +75,7 @@ public class MainController {
 
 	private static int unitTime = 100;
 	private int timeToMove = 94;
+	private Thread t1;
 	private Thread t2;
 	private boolean littleMonsterExisted = false;
 
@@ -88,8 +89,7 @@ public class MainController {
 
 	public void Start(ActionEvent event2) {
 		// Create Player and Monster
-
-		new Thread(new Runnable() {
+		t1 = new Thread(new Runnable() {
 			private String direction;
 
 			@Override
@@ -117,7 +117,7 @@ public class MainController {
 							l_timer.setText(t);
 							l_cleft.setText(c);
 							l_score.setText(s);
-							 //Control Monster
+							// Control Monster
 							direction = monster.Get_Direction(Player.PlayerX, Player.PlayerY);
 							location = monster.GetNewLocation(direction, monster);
 							monster.Cell_Move(location[0], location[1]);
@@ -128,7 +128,8 @@ public class MainController {
 
 				}
 			}
-		}).start();
+		});
+		t1.start();
 	}
 
 	public void Start2(ActionEvent event2) {
@@ -138,7 +139,7 @@ public class MainController {
 			@Override
 			public void run() {
 				int time = 100;
-				
+
 				while (time >= 0) {
 					time--;
 					String c = Integer.toString(Player.calories);
@@ -280,6 +281,24 @@ public class MainController {
 		if (r_medium.isSelected()) {
 		}
 		if (r_fast.isSelected()) {
+		}
+	}
+
+	public void Pause() {
+		try {
+			t1.suspend();
+			t2.suspend();
+		} catch (Exception e) {
+
+		}
+	}
+
+	public void Resume() {
+		try {
+			t1.resume();
+			t2.resume();
+		} catch (Exception e) {
+
 		}
 	}
 
