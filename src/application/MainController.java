@@ -21,35 +21,26 @@ public class MainController {
 	private Label l_timer;
 	@FXML
 	private Pane borderContainer;
-
 	@FXML
 	private Label l_score;
 	@FXML
 	private Label h_score;
 	@FXML
 	public Label gresult;
-
 	@FXML
 	private Label l_cleft;
-
 	@FXML
 	private TextField tf_duration;
-
 	@FXML
 	private TextField tf_calories;
-
 	@FXML
 	private TextField tf_cal_cost;
-
 	@FXML
 	private TextField tf_cal_nougat;
-
 	@FXML
 	private RadioButton r_slow;
-
 	@FXML
 	private RadioButton r_medium;
-
 	@FXML
 	private RadioButton r_fast;
 
@@ -77,6 +68,7 @@ public class MainController {
 	private int timeToMove = 94;
 	private Thread t1;
 	private Thread t2;
+	private Boolean playerCanMove = false;
 	private boolean littleMonsterExisted = false;
 
 	GridPane game = new GridPane();
@@ -130,6 +122,7 @@ public class MainController {
 			}
 		});
 		t1.start();
+		playerCanMove = true;
 	}
 
 	public void Start2(ActionEvent event2) {
@@ -193,10 +186,14 @@ public class MainController {
 		int y = Player.PlayerY;
 		if (y > 0)
 			y--;
-		if (Player.calories - Player.calories_cost >= 0)
-			player.Cell_Move(x, y);
-		else {
-			gresult.setText("No Enough Energy. Game Over!");
+		if(playerCanMove){
+			if (Player.calories - Player.calories_cost >= 0)
+				player.Cell_Move(x, y);
+			else {
+				gresult.setText("No Enough Energy. Game Over!");
+				return;
+			}
+		}else{
 			return;
 		}
 	}
@@ -206,10 +203,14 @@ public class MainController {
 		int y = Player.PlayerY;
 		if (y < 10)
 			y++;
-		if (Player.calories - Player.calories_cost >= 0)
-			player.Cell_Move(x, y);
-		else {
-			gresult.setText("No Enough Energy. Game Over!");
+		if(playerCanMove){
+			if (Player.calories - Player.calories_cost >= 0)
+				player.Cell_Move(x, y);
+			else {
+				gresult.setText("No Enough Energy. Game Over!");
+				return;
+			}
+		}else{
 			return;
 		}
 	}
@@ -219,10 +220,14 @@ public class MainController {
 		int y = Player.PlayerY;
 		if (x > 0)
 			x--;
-		if (Player.calories - Player.calories_cost >= 0)
-			player.Cell_Move(x, y);
-		else {
-			gresult.setText("No Enough Energy. Game Over!");
+		if(playerCanMove){
+			if (Player.calories - Player.calories_cost >= 0)
+				player.Cell_Move(x, y);
+			else {
+				gresult.setText("No Enough Energy. Game Over!");
+				return;
+			}
+		}else{
 			return;
 		}
 	}
@@ -232,10 +237,14 @@ public class MainController {
 		int y = Player.PlayerY;
 		if (x < 10)
 			x++;
-		if (Player.calories - Player.calories_cost >= 0)
-			player.Cell_Move(x, y);
-		else {
-			gresult.setText("No Enough Energy. Game Over!");
+		if(playerCanMove){
+			if (Player.calories - Player.calories_cost >= 0)
+				player.Cell_Move(x, y);
+			else {
+				gresult.setText("No Enough Energy. Game Over!");
+				return;
+			}
+		}else{
 			return;
 		}
 	}
@@ -313,20 +322,30 @@ public class MainController {
 
 	public void checkResult() {
 		if (Player.PlayerX == monster.MonsterX && Player.PlayerY == monster.MonsterY) {
-			System.out.println("lose");
+			gameOver();
 		}
 		if (Player.PlayerX == childMonster.MonsterX && Player.PlayerY == childMonster.MonsterY) {
 			if (unitTime > timeToMove) {
 				try {
 					t2.stop();
-					System.out.println("little monster died");
 					littleMonsterExisted = false;
 				} catch (Exception e) {
 				}
 			} else {
-				System.out.println("little monster killed u");
+				gameOver();
 			}
 
+		}
+	}
+	
+	public void gameOver(){
+		playerCanMove = false;
+		gresult.setText("You Caught by Monster. Game Over!");
+		try{
+			t1.stop();
+			t2.stop();
+		}catch(Exception E){
+			
 		}
 	}
 }
