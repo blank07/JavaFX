@@ -16,7 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class MainController1 {
-	@FXML
+/**	@FXML
 	private Label labelResult;
 
 	@FXML
@@ -279,5 +279,5 @@ public class MainController1 {
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.show();
-	}
+	}*/
 }

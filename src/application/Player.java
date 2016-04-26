@@ -40,6 +40,9 @@ public class Player extends Moveable {
 			MainController.cell[x][y].setStyle(MainController.stylePlayer);
 			PlayerX = x;
 			PlayerY = y;
+			
+			calories = calories - calories_cost;
+			
 		}
 	}
 
