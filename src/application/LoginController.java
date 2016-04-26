@@ -77,7 +77,7 @@ public class LoginController {
 			}
 			
 		}catch(Exception ex){
-			lb.setText("Cannot Connect to Data Base");
+			lb.setText("Not Connecting to DataBase");
 			lb.setTextFill(Color.RED);
 		}
 		

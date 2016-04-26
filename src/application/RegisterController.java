@@ -90,7 +90,7 @@ public class RegisterController {
 			lbl.setText(result);
 
 		} catch (SQLException ex) {
-			lbl.setText("Cannot Connect to DataBase");
+			lbl.setText("Not Connecting to DataBase");
 			lbl.setTextFill(Color.RED);
 		}
 
