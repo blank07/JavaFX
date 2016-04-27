@@ -51,11 +51,11 @@ public class MainController {
 	private RadioButton r_fast;
 	
 
-	public static int calories = 60;
+	public static int calories = 40;
 	public static int calories_cost = 2;
 	public static int nougat = 6;
 	public static int duration = 100;
-
+	
 	public static Pane cell[][] = new Pane[11][11];
 	public static Player player = new Player(calories, calories_cost, nougat);
 	public static Monster monster = new Monster();
@@ -80,7 +80,7 @@ public class MainController {
 
 	GridPane game = new GridPane();
 	int location[] = new int[2];
-
+	
 	public static void setInitialStyle() {
 		MainController.cell[Player.PlayerX][Player.PlayerY].setStyle(stylePlayer);
 		MainController.cell[Monster.MonsterInitialX][Monster.MonsterInitialY].setStyle(styleMonster);
