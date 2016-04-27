@@ -58,7 +58,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Button layoutX="648.0" layoutY="360.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="70.0" text="Trap" />
+      <Button fx:id="btn_trap" layoutX="648.0" layoutY="360.0" mnemonicParsing="false" onAction="#Trap" prefHeight="35.0" prefWidth="70.0" text="Trap" />
       <Button layoutX="731.0" layoutY="360.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="70.0" text="Tunnel" />
    </children>
 </AnchorPane>
