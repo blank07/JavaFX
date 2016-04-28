@@ -219,7 +219,7 @@ public class MainController {
 		}
 	}
 	
-	private void buttonUClicked(MouseEvent mouseEvent){
+	public void buttonUClicked(MouseEvent mouseEvent){
 	    if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 	        if (mouseEvent.getClickCount() == 2) {
 	            System.out.println("Double clicked A_button");
