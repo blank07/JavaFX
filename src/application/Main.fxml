@@ -9,7 +9,7 @@
 <AnchorPane onKeyReleased="#handleKeyReleased" prefHeight="700.0" prefWidth="833.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
       <Button fx:id="btn_setting" focusTraversable="false" layoutX="646.0" layoutY="38.0" mnemonicParsing="false" onAction="#Setting" prefHeight="35.0" prefWidth="154.0" text="Setting" />
-      <Button fx:id="btnU" focusTraversable="false" layoutX="707.0" layoutY="216.0" mnemonicParsing="false" onAction="#moveU" prefHeight="35.0" prefWidth="35.0" text="U" />
+      <Button fx:id="btnU" focusTraversable="false" layoutX="707.0" layoutY="216.0" mnemonicParsing="false" onAction="#moveU" onMouseClicked="#buttonUClicked" prefHeight="35.0" prefWidth="35.0" text="U" />
       <Button fx:id="btnL" focusTraversable="false" layoutX="672.0" layoutY="251.0" mnemonicParsing="false" onAction="#moveL" prefHeight="35.0" prefWidth="35.0" text="L" />
       <Button fx:id="btnD" focusTraversable="false" layoutX="707.0" layoutY="286.0" mnemonicParsing="false" onAction="#moveD" prefHeight="35.0" prefWidth="35.0" text="D" />
       <Button fx:id="btnR" focusTraversable="false" layoutX="742.0" layoutY="251.0" mnemonicParsing="false" onAction="#moveR" prefHeight="35.0" prefWidth="35.0" text="R" />

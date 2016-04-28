@@ -10,11 +10,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -23,6 +26,8 @@ public class MainController {
 	
 	@FXML
 	private Label l_timer;
+	@FXML
+	private Button btnU;
 	@FXML
 	private Pane borderContainer;
 	@FXML
@@ -213,7 +218,18 @@ public class MainController {
 			return;
 		}
 	}
-
+	
+	private void buttonUClicked(MouseEvent mouseEvent){
+	    if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+	        if (mouseEvent.getClickCount() == 2) {
+	            System.out.println("Double clicked A_button");
+	        }
+	        if (mouseEvent.getClickCount() == 1) {
+	            System.out.println("Single clicked A_button");
+	        }
+	    }
+	}
+	
 	public void moveD(ActionEvent event) throws Exception {
 		int x = Player.PlayerX;
 		int y = Player.PlayerY;
@@ -232,6 +248,11 @@ public class MainController {
 		}
 	}
 
+	private void buttonDClicked(MouseEvent mouseEvent){
+		
+	}
+	
+	
 	public void moveL(ActionEvent event) throws Exception {
 		int x = Player.PlayerX;
 		int y = Player.PlayerY;
@@ -249,6 +270,11 @@ public class MainController {
 			return;
 		}
 	}
+	
+	private void buttonLClicked(MouseEvent mouseEvent){
+		
+	}
+	
 
 	public void moveR(ActionEvent event) throws Exception {
 		int x = Player.PlayerX;
@@ -267,6 +293,11 @@ public class MainController {
 			return;
 		}
 	}
+	
+	private void buttonRClicked(MouseEvent mouseEvent){
+		
+	}
+	
 
 	public void delay(int time) {
 		try {
@@ -328,7 +359,8 @@ public class MainController {
 
 		}
 	}
-
+  
+	
 	public void Resume() {
 		try {
 			playerCanMove = true;
