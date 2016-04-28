@@ -23,7 +23,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class MainController {
-	
+
 	@FXML
 	private Label l_timer;
 	@FXML
@@ -54,14 +54,14 @@ public class MainController {
 	private RadioButton r_medium;
 	@FXML
 	private RadioButton r_fast;
-	
 
 	public static int calories = 40;
 	public static int calories_cost = 2;
 	public static int nougat = 6;
 	public static int duration = 100;
+	public static int delay_t = 1000;
 	public static int trap[] = new int[2];
-	
+
 	public static Pane cell[][] = new Pane[11][11];
 	public static Player player = new Player(calories, calories_cost, nougat);
 	public static Monster monster = new Monster();
@@ -72,15 +72,15 @@ public class MainController {
 	public static final String styleClear = "-fx-background-color : white;-fx-border-color : black";
 	public static final String stylePoint = "-fx-background-color : blue;-fx-border-color : black";
 	public static final String styleTrap = "-fx-background-color : black;-fx-border-color : black";
-	
+
 	public static final String UP = "U";
 	public static final String DOWN = "D";
 	public static final String LEFT = "L";
 	public static final String RIGHT = "R";
 	public static final String LEAP = "LEAP";
 
-	private static int unitTime = 100;
-	private int timeToMove = 94;
+	private static int unitTime = duration;
+	private int timeToMove = (int) (duration * 0.95);
 	private Thread t1;
 	private Thread t2;
 	private Boolean playerCanMove = false;
@@ -88,13 +88,12 @@ public class MainController {
 
 	GridPane game = new GridPane();
 	int location[] = new int[2];
-	
-	
+
 	public static void setInitialStyle() {
 		MainController.cell[Player.PlayerX][Player.PlayerY].setStyle(stylePlayer);
 		MainController.cell[Monster.MonsterInitialX][Monster.MonsterInitialY].setStyle(styleMonster);
 	}
-	
+
 	public void Start(ActionEvent event2) {
 		// Create Player and Monster
 		t1 = new Thread(new Runnable() {
@@ -102,7 +101,7 @@ public class MainController {
 
 			@Override
 			public void run() {
-				int time = 100;
+				int time = duration;
 				int score = 0;
 				while (time >= 0) {
 
@@ -110,12 +109,11 @@ public class MainController {
 					String s = Integer.toString(score);
 					String c = Integer.toString(Player.calories);
 
-					if (time == 97 || time == 90) {
+					if (time == (int) (duration * 0.9) || time == (int) (duration * 0.8)) {
 						if (!littleMonsterExisted) {
 							Start2(null);
 							littleMonsterExisted = true;
 						}
-
 					}
 					time--;
 					score++;
@@ -132,15 +130,15 @@ public class MainController {
 							checkResult();
 						}
 					});
-					delay(1000);
+					delay(delay_t);
 				}
 			}
 		});
 		t1.start();
-		try{
+		try {
 			h_score.setText(LoginController.LoginUserScore);
-		}catch(Exception e){
-			
+		} catch (Exception e) {
+
 		}
 		playerCanMove = true;
 	}
@@ -155,11 +153,11 @@ public class MainController {
 
 				while (time >= 0) {
 					time--;
-					//String c = Integer.toString(Player.calories);
+					// String c = Integer.toString(Player.calories);
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
-							//l_cleft.setText(c);
+							// l_cleft.setText(c);
 							unitTime--;
 							// Control Monster
 							direction = childMonster.Get_Direction(Player.PlayerX, Player.PlayerY);
@@ -204,9 +202,10 @@ public class MainController {
 	public void moveU(ActionEvent event) throws Exception {
 		int x = Player.PlayerX;
 		int y = Player.PlayerY;
+
 		if (y > 0)
 			y--;
-		if(playerCanMove){
+		if (playerCanMove) {
 			if (Player.calories - Player.calories_cost >= 0)
 				player.Cell_Move(x, y);
 			else {
@@ -214,28 +213,33 @@ public class MainController {
 				gameOver();
 				return;
 			}
-		}else{
+		} else {
 			return;
 		}
+
 	}
-	
-	public void buttonUClicked(MouseEvent mouseEvent){
-	    if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-	        if (mouseEvent.getClickCount() == 2) {
-	            System.out.println("Double clicked A_button");
-	        }
-	        if (mouseEvent.getClickCount() == 1) {
-	            System.out.println("Single clicked A_button");
-	        }
-	    }
+
+	public void buttonUClicked(MouseEvent mouseEvent) {
+		if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+
+			if (mouseEvent.getClickCount() == 2) {
+				System.out.println("Double clicked A_button");
+			}
+			if (mouseEvent.getClickCount() == 1) {
+				System.out.println("Single clicked A_button");
+			}
+			if (mouseEvent.getClickCount() == 3) {
+				System.out.println("Triple clicked A_button");
+			}
+		}
 	}
-	
+
 	public void moveD(ActionEvent event) throws Exception {
 		int x = Player.PlayerX;
 		int y = Player.PlayerY;
 		if (y < 10)
 			y++;
-		if(playerCanMove){
+		if (playerCanMove) {
 			if (Player.calories - Player.calories_cost >= 0)
 				player.Cell_Move(x, y);
 			else {
@@ -243,22 +247,21 @@ public class MainController {
 				gameOver();
 				return;
 			}
-		}else{
+		} else {
 			return;
 		}
 	}
 
-	private void buttonDClicked(MouseEvent mouseEvent){
-		
+	private void buttonDClicked(MouseEvent mouseEvent) {
+
 	}
-	
-	
+
 	public void moveL(ActionEvent event) throws Exception {
 		int x = Player.PlayerX;
 		int y = Player.PlayerY;
 		if (x > 0)
 			x--;
-		if(playerCanMove){
+		if (playerCanMove) {
 			if (Player.calories - Player.calories_cost >= 0)
 				player.Cell_Move(x, y);
 			else {
@@ -266,22 +269,21 @@ public class MainController {
 				gameOver();
 				return;
 			}
-		}else{
+		} else {
 			return;
 		}
 	}
-	
-	private void buttonLClicked(MouseEvent mouseEvent){
-		
+
+	private void buttonLClicked(MouseEvent mouseEvent) {
+
 	}
-	
 
 	public void moveR(ActionEvent event) throws Exception {
 		int x = Player.PlayerX;
 		int y = Player.PlayerY;
 		if (x < 10)
 			x++;
-		if(playerCanMove){
+		if (playerCanMove) {
 			if (Player.calories - Player.calories_cost >= 0)
 				player.Cell_Move(x, y);
 			else {
@@ -289,15 +291,14 @@ public class MainController {
 				gameOver();
 				return;
 			}
-		}else{
+		} else {
 			return;
 		}
 	}
-	
-	private void buttonRClicked(MouseEvent mouseEvent){
-		
+
+	private void buttonRClicked(MouseEvent mouseEvent) {
+
 	}
-	
 
 	public void delay(int time) {
 		try {
@@ -307,13 +308,16 @@ public class MainController {
 		}
 	}
 
-	public void Trap(ActionEvent event1){
+	public void Trap(ActionEvent event1) {
 		System.out.println("trap");
-		player.setTrap(Player.PlayerX,Player.PlayerY);
-		trap[0]=Player.PlayerX;
-		trap[1]=Player.PlayerY;
+		if (Player.calories - Player.calories_cost >= 50) {
+
+			player.setTrap(Player.PlayerX, Player.PlayerY);
+			trap[0] = Player.PlayerX;
+			trap[1] = Player.PlayerY;
+		}
 	}
-	
+
 	public void Save(ActionEvent event1) {
 		System.out.println(" Saving...");
 
@@ -343,10 +347,13 @@ public class MainController {
 
 		// Monster Step speed
 		if (r_slow.isSelected()) {
+			delay_t = 1000;
 		}
 		if (r_medium.isSelected()) {
+			delay_t = 600;
 		}
 		if (r_fast.isSelected()) {
+			delay_t = 300;
 		}
 	}
 
@@ -359,8 +366,7 @@ public class MainController {
 
 		}
 	}
-  
-	
+
 	public void Resume() {
 		try {
 			playerCanMove = true;
@@ -399,38 +405,40 @@ public class MainController {
 
 		}
 	}
-	
-	public void saveScore(){
-			if(Integer.parseInt(l_score.getText())>Integer.parseInt(h_score.getText())){
-				
-			try{	
+
+	public void saveScore() {
+		if (Integer.parseInt(l_score.getText()) > Integer.parseInt(h_score.getText())) {
+
+			try {
 				String url = "jdbc:mysql://localhost:3306/sc?useSSL=false";
 				String usernameDB = "root";
 				String passwordDB = "password";
 				Connection myConn = DriverManager.getConnection(url, usernameDB, passwordDB);
 				Statement myStmt = myConn.createStatement();
-				myStmt.executeUpdate("update sc.logindb set score = '"+l_score.getText().toString()+"' where id = "+LoginController.LoginUserId+";");
+				myStmt.executeUpdate("update sc.logindb set score = '" + l_score.getText().toString() + "' where id = "
+						+ LoginController.LoginUserId + ";");
 				newHighScore.setText("New High Score!!");
-			
-			}catch(Exception e){
+
+			} catch (Exception e) {
 
 			}
-			
+
 		}
-		
+
 	}
-	public void gameOver(){
+
+	public void gameOver() {
 		playerCanMove = false;
-		try{
+		try {
 			t1.stop();
 			t2.stop();
-		}catch(Exception Ex){
-			
+		} catch (Exception Ex) {
+
 		}
-		try{
+		try {
 			saveScore();
-		}catch(Exception E){
-			
+		} catch (Exception E) {
+
 		}
 	}
 }
