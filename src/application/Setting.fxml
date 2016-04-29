@@ -10,7 +10,7 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+<AnchorPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Setting">
    <children>
       <Button fx:id="btn_save" layoutX="171.0" layoutY="240.0" mnemonicParsing="false" onAction="#Save" text="Save" />
       <TabPane fx:id="tab_option" prefHeight="240.0" prefWidth="400.0" tabClosingPolicy="UNAVAILABLE">

@@ -11,9 +11,10 @@ public class Player extends Moveable {
 	public static int calories_cost;
 	public static boolean result;
 
+	// Constructor
 	public Player(int c, int c_c, int n) {
-		PlayerX = 0;
-		PlayerY = 0;
+		PlayerX = 0; // Coordinate X
+		PlayerY = 0; // Coordinate Y
 		nougat = n;
 		calories = c + n;
 		calories_cost = c_c;
@@ -27,13 +28,7 @@ public class Player extends Moveable {
 			// change current location back
 			String style = MainController.cell[PlayerX][PlayerY].getStyle();
 			if (style != MainController.styleTrap) {
-
-				if ((PlayerX % 5 == 0) || (PlayerY % 5 == 0 && PlayerX % 5 != 0)) {
-					if (PlayerX % 5 == 0 && PlayerY % 5 == 0)
-						MainController.cell[PlayerX][PlayerY].setStyle(MainController.stylePoint);
-					else
-						MainController.cell[PlayerX][PlayerY].setStyle(MainController.styleClear);
-				}
+				setOriginal(PlayerX, PlayerY);
 			}
 
 			// move player to new location
@@ -46,6 +41,12 @@ public class Player extends Moveable {
 		}
 	}
 
+	/**
+	 * Check if there is a nougat on the cell
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	private void checkNougats(int x, int y) {
 		Node nt = MainController.cell[x][y].getChildren().get(0);
 
@@ -60,4 +61,44 @@ public class Player extends Moveable {
 	public void setTrap(int x, int y) {
 		MainController.cell[x][y].setStyle(MainController.styleTrap);
 	}
+
+	public boolean movePlayer(String d, boolean playerCanMove) {
+		boolean result = true;
+		int x = PlayerX;
+		int y = PlayerY;
+
+		switch (d) {
+		case MainController.UP:
+			if (y > 0)
+				y--;
+			break;
+		case MainController.DOWN:
+			if (y < 10)
+				y++;
+			break;
+		case MainController.LEFT:
+			if (x > 0)
+				x--;
+			break;
+		case MainController.RIGHT:
+			if (x < 10)
+				x++;
+			break;
+		default:
+
+		}
+		if (playerCanMove) {
+			if (Player.calories - Player.calories_cost >= 0)
+				Cell_Move(x, y);
+			else {
+				MainController.gameResult = "No Enough Energy. Game Over!";
+				result = false;
+			}
+		} else {
+			result = false;
+		}
+		return result;
+
+	}
+
 }

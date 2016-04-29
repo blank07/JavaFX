@@ -151,23 +151,20 @@ public class Monster extends Moveable {
 
 	@Override
 	public void Cell_Move(int x, int y) {
-		/**
-		 * check if next location is valid
-		 */
+		 //check if next location is valid
 		boolean result = checkValid(x, y);
 		if (result == true) {
-			/**
-			 * change current location back
-			 */
-			if ((MonsterX % 5 == 0) || (MonsterY % 5 == 0 && MonsterX % 5 != 0)) {
+			// change current location back
+			/**if ((MonsterX % 5 == 0) || (MonsterY % 5 == 0 && MonsterX % 5 != 0)) {
 				if (MonsterX % 5 == 0 && MonsterY % 5 == 0)
 					MainController.cell[MonsterX][MonsterY].setStyle(MainController.stylePoint);
 				else
 					MainController.cell[MonsterX][MonsterY].setStyle(MainController.styleClear);
-			}
-			/**
-			 * move player to new location
-			 */
+			}*/
+			
+			setOriginal(MonsterX,MonsterY);
+			
+			 //move player to new location
 			if (invisibleAllowed&&visibilityCounter > 5 ) {
 				if (x % 5 == 0 && y % 5 == 0) {
 					MainController.cell[x][y].setStyle("-fx-background-color : blue;-fx-border-color : black");

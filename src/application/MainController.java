@@ -27,8 +27,6 @@ public class MainController {
 	@FXML
 	private Label l_timer;
 	@FXML
-	private Button btnU;
-	@FXML
 	private Pane borderContainer;
 	@FXML
 	private Label l_score;
@@ -40,20 +38,6 @@ public class MainController {
 	public Label gresult;
 	@FXML
 	private Label l_cleft;
-	@FXML
-	private TextField tf_duration;
-	@FXML
-	private TextField tf_calories;
-	@FXML
-	private TextField tf_cal_cost;
-	@FXML
-	private TextField tf_cal_nougat;
-	@FXML
-	private RadioButton r_slow;
-	@FXML
-	private RadioButton r_medium;
-	@FXML
-	private RadioButton r_fast;
 
 	public static int calories = 40;
 	public static int calories_cost = 2;
@@ -61,6 +45,7 @@ public class MainController {
 	public static int duration = 100;
 	public static int delay_t = 1000;
 	public static int trap[] = new int[2];
+	public static String gameResult = null;
 
 	public static Pane cell[][] = new Pane[11][11];
 	public static Player player = new Player(calories, calories_cost, nougat);
@@ -199,26 +184,6 @@ public class MainController {
 		checkResult();
 	}
 
-	public void moveU(ActionEvent event) throws Exception {
-		int x = Player.PlayerX;
-		int y = Player.PlayerY;
-
-		if (y > 0)
-			y--;
-		if (playerCanMove) {
-			if (Player.calories - Player.calories_cost >= 0)
-				player.Cell_Move(x, y);
-			else {
-				gresult.setText("No Enough Energy. Game Over!");
-				gameOver();
-				return;
-			}
-		} else {
-			return;
-		}
-
-	}
-
 	public void buttonUClicked(MouseEvent mouseEvent) {
 		if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
 
@@ -233,71 +198,38 @@ public class MainController {
 			}
 		}
 	}
-
+	
+	
+   //Move up
+	public void moveU(ActionEvent event) throws Exception {
+		boolean result = player.movePlayer(UP, playerCanMove);
+		if (result == false)
+			gameOver();
+		return;
+	}
+	
+   //Move down
 	public void moveD(ActionEvent event) throws Exception {
-		int x = Player.PlayerX;
-		int y = Player.PlayerY;
-		if (y < 10)
-			y++;
-		if (playerCanMove) {
-			if (Player.calories - Player.calories_cost >= 0)
-				player.Cell_Move(x, y);
-			else {
-				gresult.setText("No Enough Energy. Game Over!");
-				gameOver();
-				return;
-			}
-		} else {
-			return;
-		}
+		boolean result = player.movePlayer(DOWN, playerCanMove);
+		if (result == false)
+			gameOver();
+		return;
 	}
 
-	private void buttonDClicked(MouseEvent mouseEvent) {
-
-	}
-
+	//Move left
 	public void moveL(ActionEvent event) throws Exception {
-		int x = Player.PlayerX;
-		int y = Player.PlayerY;
-		if (x > 0)
-			x--;
-		if (playerCanMove) {
-			if (Player.calories - Player.calories_cost >= 0)
-				player.Cell_Move(x, y);
-			else {
-				gresult.setText("No Enough Energy. Game Over!");
-				gameOver();
-				return;
-			}
-		} else {
-			return;
-		}
+		boolean result = player.movePlayer(LEFT, playerCanMove);
+		if (result == false)
+			gameOver();
+		return;
 	}
 
-	private void buttonLClicked(MouseEvent mouseEvent) {
-
-	}
-
+	//Move down
 	public void moveR(ActionEvent event) throws Exception {
-		int x = Player.PlayerX;
-		int y = Player.PlayerY;
-		if (x < 10)
-			x++;
-		if (playerCanMove) {
-			if (Player.calories - Player.calories_cost >= 0)
-				player.Cell_Move(x, y);
-			else {
-				gresult.setText("No Enough Energy. Game Over!");
-				gameOver();
-				return;
-			}
-		} else {
-			return;
-		}
-	}
-
-	private void buttonRClicked(MouseEvent mouseEvent) {
-
+		boolean result = player.movePlayer(RIGHT, playerCanMove);
+		if (result == false)
+			gameOver();
+		return;
 	}
 
 	public void delay(int time) {
@@ -315,45 +247,6 @@ public class MainController {
 			player.setTrap(Player.PlayerX, Player.PlayerY);
 			trap[0] = Player.PlayerX;
 			trap[1] = Player.PlayerY;
-		}
-	}
-
-	public void Save(ActionEvent event1) {
-		System.out.println(" Saving...");
-
-		// Duration
-		if (tf_duration.getText() != null) {
-			String temp = tf_duration.getText();
-			duration = Integer.parseInt(temp);
-		}
-
-		// Initial Calories
-		if (tf_calories.getText() != null) {
-			String temp = tf_calories.getText();
-			calories = Integer.parseInt(temp);
-		}
-
-		// Calories cost
-		if (tf_cal_cost.getText() != null) {
-			String temp = tf_cal_cost.getText();
-			calories_cost = Integer.parseInt(temp);
-		}
-
-		// Calories per nougat
-		if (tf_cal_nougat.getText() != null) {
-			String temp = tf_cal_nougat.getText();
-			nougat = Integer.parseInt(temp);
-		}
-
-		// Monster Step speed
-		if (r_slow.isSelected()) {
-			delay_t = 1000;
-		}
-		if (r_medium.isSelected()) {
-			delay_t = 600;
-		}
-		if (r_fast.isSelected()) {
-			delay_t = 300;
 		}
 	}
 
@@ -420,11 +313,8 @@ public class MainController {
 				newHighScore.setText("New High Score!!");
 
 			} catch (Exception e) {
-
 			}
-
 		}
-
 	}
 
 	public void gameOver() {
