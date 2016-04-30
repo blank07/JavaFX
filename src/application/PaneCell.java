@@ -24,9 +24,6 @@ public class PaneCell extends Pane {
 			} else
 				this.setStyle("-fx-background-color : white;-fx-border-color : black");
 		}
-
 		this.setPrefSize(50, 50);
-
 	}
-
 }

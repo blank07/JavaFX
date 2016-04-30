@@ -44,7 +44,9 @@ public class MainController {
 	public static int nougat = 6;
 	public static int duration = 100;
 	public static int delay_t = 1000;
-	public static int trap[] = new int[2];
+	public static int trapTime = 0;
+	public static int tunnelTime = 0;
+	public static int trapLocation[] = new int[2];
 	public static String gameResult = null;
 
 	public static Pane cell[][] = new Pane[11][11];
@@ -57,6 +59,8 @@ public class MainController {
 	public static final String styleClear = "-fx-background-color : white;-fx-border-color : black";
 	public static final String stylePoint = "-fx-background-color : blue;-fx-border-color : black";
 	public static final String styleTrap = "-fx-background-color : black;-fx-border-color : black";
+	public static final String styleTunnel = "-fx-background-color : orange;-fx-border-color : black";
+	
 
 	public static final String UP = "U";
 	public static final String DOWN = "D";
@@ -93,6 +97,21 @@ public class MainController {
 					String t = Integer.toString(time);
 					String s = Integer.toString(score);
 					String c = Integer.toString(Player.calories);
+
+					// Control Trap
+					if (trapTime > 0) {
+						trapTime--;
+						if (trapTime == 0) {
+							player.setOriginal(trapLocation[0], trapLocation[1]);
+						}
+					}
+					
+					//Control Tunnel Building Time
+					if(tunnelTime >0){
+						tunnelTime--;
+						
+						
+					}
 
 					if (time == (int) (duration * 0.9) || time == (int) (duration * 0.8)) {
 						if (!littleMonsterExisted) {
@@ -134,7 +153,7 @@ public class MainController {
 
 			@Override
 			public void run() {
-				int time = 100;
+				int time = duration;
 
 				while (time >= 0) {
 					time--;
@@ -153,7 +172,7 @@ public class MainController {
 								childMonster.Cell_Move(location[0], location[1]);
 						}
 					});
-					delay(2000);
+					delay(delay_t * 2);
 				}
 			}
 		});
@@ -198,38 +217,45 @@ public class MainController {
 			}
 		}
 	}
-	
-	
-   //Move up
+
+	// Move up
 	public void moveU(ActionEvent event) throws Exception {
 		boolean result = player.movePlayer(UP, playerCanMove);
-		if (result == false)
+		if (result == false) {
+			gresult.setText(gameResult);
 			gameOver();
-		return;
+			return;
+		}
 	}
-	
-   //Move down
+
+	// Move down
 	public void moveD(ActionEvent event) throws Exception {
 		boolean result = player.movePlayer(DOWN, playerCanMove);
-		if (result == false)
+		if (result == false) {
+			gresult.setText(gameResult);
 			gameOver();
-		return;
+			return;
+		}
 	}
 
-	//Move left
+	// Move left
 	public void moveL(ActionEvent event) throws Exception {
 		boolean result = player.movePlayer(LEFT, playerCanMove);
-		if (result == false)
+		if (result == false) {
+			gresult.setText(gameResult);
 			gameOver();
-		return;
+			return;
+		}
 	}
 
-	//Move down
+	// Move down
 	public void moveR(ActionEvent event) throws Exception {
 		boolean result = player.movePlayer(RIGHT, playerCanMove);
-		if (result == false)
+		if (result == false) {
+			gresult.setText(gameResult);
 			gameOver();
-		return;
+			return;
+		}
 	}
 
 	public void delay(int time) {
@@ -241,13 +267,20 @@ public class MainController {
 	}
 
 	public void Trap(ActionEvent event1) {
-		System.out.println("trap");
-		if (Player.calories - Player.calories_cost >= 50) {
-
+		//System.out.println("trap");
+		if (Player.calories - Player.calories_cost >= 50 && trapTime == 0) {
 			player.setTrap(Player.PlayerX, Player.PlayerY);
-			trap[0] = Player.PlayerX;
-			trap[1] = Player.PlayerY;
+			trapTime = 5;
+			trapLocation[0] = Player.PlayerX;
+			trapLocation[1] = Player.PlayerY;
 		}
+	}
+	
+	public void Tunnel(){
+		int tunnelLocation[] = new int[2];
+		player.buildTunnel();
+		
+		//System.out.println("Tunnel");
 	}
 
 	public void Pause() {
@@ -266,7 +299,6 @@ public class MainController {
 			t1.resume();
 			t2.resume();
 		} catch (Exception e) {
-
 		}
 	}
 

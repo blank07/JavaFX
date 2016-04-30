@@ -98,7 +98,32 @@ public class Player extends Moveable {
 			result = false;
 		}
 		return result;
-
 	}
 
+	public int[] buildTunnel() {
+		int location[] = new int[2];
+		if (PlayerX % 5 == 0 && !(PlayerY % 5 == 0)) {
+			if (PlayerX == 10) {
+				for (int i = 9; i > 5; i--) {
+					MainController.cell[i][PlayerY].setStyle(MainController.styleTunnel);
+				}
+			} else {
+				for (int j = PlayerX+1 ; j < PlayerX + 5; j++) {
+					MainController.cell[j][PlayerY].setStyle(MainController.styleTunnel);
+				}
+			}
+		}
+		if (PlayerY % 5 == 0 && !(PlayerX % 5 == 0)) {
+			if (PlayerY == 10) {
+				for (int i = 9; i > 5; i--) {
+					MainController.cell[PlayerX][i].setStyle(MainController.styleTunnel);
+				}
+			}else{
+				for (int j = PlayerY+1 ; j < PlayerY + 5; j++) {
+					MainController.cell[PlayerX][j].setStyle(MainController.styleTunnel);
+				}
+			}	
+		}
+		return location;
+	}
 }
