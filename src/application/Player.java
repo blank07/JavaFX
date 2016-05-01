@@ -70,27 +70,35 @@ public class Player extends Moveable {
 		MainController.cell[x][y].setStyle(MainController.styleTrap);
 	}
 
-	public boolean movePlayer(String d, boolean playerCanMove) {
+	public boolean movePlayer(String d, boolean playerCanMove, boolean shiftPressed, boolean ctrlPressed) {
+		int s = 1;
+		if(shiftPressed){
+			s=2;
+		}
+		if(ctrlPressed){
+			s=3;
+		}
 		boolean result = true;
+		
 		int x = PlayerX;
 		int y = PlayerY;
 
 		switch (d) {
 		case MainController.UP:
-			if (y > 0)
-				y--;
+			if (y >= s)
+				y-=s;
 			break;
 		case MainController.DOWN:
-			if (y < 10)
-				y++;
+			if (y <= 10-s)
+				y+=s;
 			break;
 		case MainController.LEFT:
-			if (x > 0)
-				x--;
+			if (x >= s)
+				x-=s;
 			break;
 		case MainController.RIGHT:
-			if (x < 10)
-				x++;
+			if (x <= 10-s)
+				x+=s;
 			break;
 		default:
 

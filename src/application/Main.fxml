@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane onKeyReleased="#handleKeyReleased" prefHeight="700.0" prefWidth="833.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+<AnchorPane onKeyReleased="#handleKeyReleased" onKeyPressed="#handleKeyPressed" prefHeight="700.0" prefWidth="833.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
       <Button fx:id="btn_setting" focusTraversable="false" layoutX="646.0" layoutY="38.0" mnemonicParsing="false" onAction="#Setting" prefHeight="35.0" prefWidth="154.0" text="Setting" />
       <Button fx:id="btnU" focusTraversable="false" layoutX="707.0" layoutY="216.0" mnemonicParsing="false" onAction="#moveU" onMouseClicked="#buttonUClicked" prefHeight="35.0" prefWidth="35.0" text="U" />
@@ -58,7 +58,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Button fx:id="btn_trap" layoutX="648.0" layoutY="360.0" mnemonicParsing="false" onAction="#Trap" prefHeight="35.0" prefWidth="70.0" text="Trap" />
-      <Button layoutX="731.0" layoutY="360.0" mnemonicParsing="false" onAction="#Tunnel" prefHeight="35.0" prefWidth="70.0" text="Tunnel" />
+      <Button fx:id="btn_trap" focusTraversable="false" layoutX="648.0" layoutY="360.0" mnemonicParsing="false" onAction="#Trap" prefHeight="35.0" prefWidth="70.0" text="Trap" />
+      <Button focusTraversable="false" layoutX="731.0" layoutY="360.0" mnemonicParsing="false" onAction="#Tunnel" prefHeight="35.0" prefWidth="70.0" text="Tunnel" />
    </children>
 </AnchorPane>

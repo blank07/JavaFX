@@ -77,6 +77,8 @@ public class MainController {
 	private Thread t2;
 	private Boolean playerCanMove = false;
 	private boolean littleMonsterExisted = false;
+	private boolean shiftPressed = false;
+	private boolean ctrlPressed = false;
 
 	GridPane game = new GridPane();
 	int location[] = new int[2];
@@ -184,13 +186,15 @@ public class MainController {
 	}
 
 	public void handleKeyPressed(KeyEvent event) throws Exception {
-	}
-
-	public void handleKeyReleased(KeyEvent event) throws Exception {
-
+		if (event.getCode() == KeyCode.CONTROL) {
+			ctrlPressed = true;
+		}
+		if (event.getCode() == KeyCode.SHIFT) {
+			shiftPressed = true;
+		}
+		
 		if (event.getCode() == KeyCode.ENTER) {
 			Start(null);
-			// Start2(null);
 		}
 		if (event.getCode() == KeyCode.UP) {
 			moveU(null);
@@ -205,6 +209,16 @@ public class MainController {
 			moveL(null);
 		}
 		checkResult();
+	
+	}
+
+	public void handleKeyReleased(KeyEvent event) throws Exception {
+		if (event.getCode() == KeyCode.CONTROL) {
+			ctrlPressed = false;
+		}
+		if (event.getCode() == KeyCode.SHIFT) {
+			shiftPressed = false;
+		}
 	}
 
 	public void buttonUClicked(MouseEvent mouseEvent) {
@@ -224,7 +238,7 @@ public class MainController {
 
 	// Move up
 	public void moveU(ActionEvent event) throws Exception {
-		boolean result = player.movePlayer(UP, playerCanMove);
+		boolean result = player.movePlayer(UP, playerCanMove,shiftPressed,ctrlPressed);
 		if (result == false) {
 			gresult.setText(gameResult);
 			gameOver();
@@ -234,7 +248,7 @@ public class MainController {
 
 	// Move down
 	public void moveD(ActionEvent event) throws Exception {
-		boolean result = player.movePlayer(DOWN, playerCanMove);
+		boolean result = player.movePlayer(DOWN, playerCanMove,shiftPressed,ctrlPressed);
 		if (result == false) {
 			gresult.setText(gameResult);
 			gameOver();
@@ -244,7 +258,7 @@ public class MainController {
 
 	// Move left
 	public void moveL(ActionEvent event) throws Exception {
-		boolean result = player.movePlayer(LEFT, playerCanMove);
+		boolean result = player.movePlayer(LEFT, playerCanMove,shiftPressed,ctrlPressed);
 		if (result == false) {
 			gresult.setText(gameResult);
 			gameOver();
@@ -254,7 +268,7 @@ public class MainController {
 
 	// Move down
 	public void moveR(ActionEvent event) throws Exception {
-		boolean result = player.movePlayer(RIGHT, playerCanMove);
+		boolean result = player.movePlayer(RIGHT, playerCanMove,shiftPressed,ctrlPressed);
 		if (result == false) {
 			gresult.setText(gameResult);
 			gameOver();
