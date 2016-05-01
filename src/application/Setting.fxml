@@ -49,7 +49,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <CheckBox layoutX="26.0" layoutY="31.0" mnemonicParsing="false" text="Invisible" />
+                        <CheckBox fx:id="Invi" layoutX="26.0" layoutY="31.0" mnemonicParsing="false" text="Invisible" />
                      </children></AnchorPane>
             </content>
           </Tab>

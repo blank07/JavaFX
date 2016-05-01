@@ -2,6 +2,7 @@ package application;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
@@ -20,6 +21,8 @@ public class Setting {
 	private RadioButton r_medium;
 	@FXML
 	private RadioButton r_fast;
+	@FXML
+	private CheckBox Invi;
 
 
 	public void Save(ActionEvent event1) {
@@ -58,6 +61,9 @@ public class Setting {
 		}
 		if (r_fast.isSelected()) {
 			MainController.delay_t = 300;
+		}
+		if (Invi.isSelected()){
+			Monster.invisibleAllowed = true;
 		}
 	}
 

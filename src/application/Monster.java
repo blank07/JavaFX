@@ -7,7 +7,7 @@ public class Monster extends Moveable {
 	public int MonsterX;
 	public int MonsterY;
 	public int visibilityCounter = 0;
-	boolean invisibleAllowed = false;
+	public static boolean invisibleAllowed = false;
 	
 	public Monster() {
 		MonsterX = MonsterInitialX;
