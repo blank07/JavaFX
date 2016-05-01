@@ -24,20 +24,28 @@ public class Player extends Moveable {
 	public void Cell_Move(int x, int y) {
 		// check if next location is valid
 		boolean result = checkValid(x, y);
-		if (result == true) {
-			// change current location back
-			String style = MainController.cell[PlayerX][PlayerY].getStyle();
-			if (style != MainController.styleTrap) {
-				setOriginal(PlayerX, PlayerY);
+		
+		if (PlayerX == MainController.tunnelLocation[0] && PlayerY == MainController.tunnelLocation[1]&&MainController.tunnelFlag == true) {
+			// move player to new location
+			MainController.cell[MainController.tunnelEnd[0]][MainController.tunnelEnd[1]].setStyle(MainController.stylePlayer);
+			PlayerX = MainController.tunnelEnd[0];
+			PlayerY = MainController.tunnelEnd[1];
+			
+		} else {
+			if (result == true) {
+				// change current location back
+				String style = MainController.cell[PlayerX][PlayerY].getStyle();
+				if (style != MainController.styleTrap) {
+					setOriginal(PlayerX, PlayerY);
+				}
+				// move player to new location
+				MainController.cell[x][y].setStyle(MainController.stylePlayer);
+				PlayerX = x;
+				PlayerY = y;
 			}
 
-			// move player to new location
-			MainController.cell[x][y].setStyle(MainController.stylePlayer);
-			PlayerX = x;
-			PlayerY = y;
-
 			// check if there is nougats
-			checkNougats(x, y);
+			checkNougats(PlayerX,PlayerY);
 		}
 	}
 
@@ -101,29 +109,44 @@ public class Player extends Moveable {
 	}
 
 	public int[] buildTunnel() {
-		int location[] = new int[2];
-		if (PlayerX % 5 == 0 && !(PlayerY % 5 == 0)) {
-			if (PlayerX == 10) {
+		int endLocation[] = new int[2];
+		endLocation = setTunnel(MainController.styleTunnel, PlayerX, PlayerY);
+		return endLocation;
+	}
+
+	private int[] setTunnel(String style, int x, int y) {
+		int endLocation[] = new int[2];
+		if (x % 5 == 0 && !(y % 5 == 0)) {
+			if (x == 10) {
 				for (int i = 9; i > 5; i--) {
-					MainController.cell[i][PlayerY].setStyle(MainController.styleTunnel);
+					MainController.cell[i][y].setStyle(style);
 				}
+				endLocation[0] = 5;
+				endLocation[1] = y;
 			} else {
-				for (int j = PlayerX+1 ; j < PlayerX + 5; j++) {
-					MainController.cell[j][PlayerY].setStyle(MainController.styleTunnel);
+				for (int j = x + 1; j < x + 5; j++) {
+					MainController.cell[j][y].setStyle(style);
 				}
+				endLocation[0] = x + 5;
+				endLocation[1] = y;
 			}
 		}
-		if (PlayerY % 5 == 0 && !(PlayerX % 5 == 0)) {
-			if (PlayerY == 10) {
+		if (y % 5 == 0 && !(x % 5 == 0)) {
+			if (y == 10) {
 				for (int i = 9; i > 5; i--) {
-					MainController.cell[PlayerX][i].setStyle(MainController.styleTunnel);
+					MainController.cell[PlayerX][i].setStyle(style);
 				}
-			}else{
-				for (int j = PlayerY+1 ; j < PlayerY + 5; j++) {
-					MainController.cell[PlayerX][j].setStyle(MainController.styleTunnel);
+				endLocation[0] = x;
+				endLocation[1] = y + 5;
+			} else {
+				for (int j = y + 1; j < y + 5; j++) {
+					MainController.cell[x][j].setStyle(style);
 				}
-			}	
+				endLocation[0] = x;
+				endLocation[1] = y + 5;
+			}
 		}
-		return location;
+		return endLocation;
 	}
+
 }

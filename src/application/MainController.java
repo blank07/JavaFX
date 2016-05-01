@@ -39,6 +39,7 @@ public class MainController {
 	@FXML
 	private Label l_cleft;
 
+	public static boolean tunnelFlag;
 	public static int calories = 40;
 	public static int calories_cost = 2;
 	public static int nougat = 6;
@@ -46,6 +47,8 @@ public class MainController {
 	public static int delay_t = 1000;
 	public static int trapTime = 0;
 	public static int tunnelTime = 0;
+	public static int tunnelLocation[] = new int[2];
+	public static int tunnelEnd[] = new int[2];
 	public static int trapLocation[] = new int[2];
 	public static String gameResult = null;
 
@@ -109,8 +112,9 @@ public class MainController {
 					//Control Tunnel Building Time
 					if(tunnelTime >0){
 						tunnelTime--;
-						
-						
+						if(tunnelTime == 0){
+							
+						}
 					}
 
 					if (time == (int) (duration * 0.9) || time == (int) (duration * 0.8)) {
@@ -277,10 +281,11 @@ public class MainController {
 	}
 	
 	public void Tunnel(){
-		int tunnelLocation[] = new int[2];
-		player.buildTunnel();
-		
-		//System.out.println("Tunnel");
+		tunnelLocation[0] = Player.PlayerX;
+		tunnelLocation[1]= Player.PlayerY;
+		tunnelEnd = player.buildTunnel();
+		tunnelTime = 3;
+		tunnelFlag = true;
 	}
 
 	public void Pause() {

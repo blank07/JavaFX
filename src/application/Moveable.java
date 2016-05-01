@@ -16,6 +16,7 @@ public abstract class Moveable {
 	 */
 	public boolean checkValid(int x, int y) {
 		boolean result = false;
+		
 		if ((x % 5 == 0) || (y % 5 == 0 && x % 5 != 0)) {
 			result = true;
 		}
