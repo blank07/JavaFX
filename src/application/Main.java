@@ -9,7 +9,9 @@ import javafx.scene.Scene;
 public class Main extends Application {
 	static Stage primaryStageLogin = new Stage();
 	
-	//
+	/**
+	 * open login board
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 		try {

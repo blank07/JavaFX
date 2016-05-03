@@ -25,69 +25,85 @@ import javafx.stage.Stage;
 public class MainController {
 
 	@FXML
-	private Label l_timer;
+	private Label l_timer; // timer
 	@FXML
-	private Pane borderContainer;
+	private Pane borderContainer; // Container for the cells of the game board
 	@FXML
-	private Label l_score;
+	private Label l_score; // Score the player got
 	@FXML
-	private Label h_score;
+	private Label h_score; // Highest score
 	@FXML
-	private Label newHighScore;
+	private Label newHighScore; // New highest Score
 	@FXML
-	public Label gresult;
+	public Label gresult; // Text of Game result
 	@FXML
-	private Label l_cleft;
+	private Label l_cleft; // Calories left
 
-	public static boolean tunnelFlag;
-	public static int calories = 40;
-	public static int calories_cost = 2;
-	public static int nougat = 6;
-	public static int duration = 100;
-	public static int delay_t = 1000;
-	public static int trapTime = 0;
-	public static int tunnelTime = 0;
-	public static int tunnelLocation[] = new int[2];
-	public static int tunnelEnd[] = new int[2];
-	public static int trapLocation[] = new int[2];
-	public static String gameResult = null;
+	public static boolean tunnelFlag; // Flag to identify Tunnel Exist
+	public static int calories = 40; // Calories for player, initial as 40
+	public static int calories_cost = 2; // Calories cost for each move
+	public static int nougat = 6; // calories get from each nougat
+	public static int duration = 100; // Duration of the game
+	public static int delay_t = 1000; // time unit for the monster to move
+	public static int trapTime = 0; // Time to build trap
+	public static int tunnelTime = 0; // time to build tunnel
+	public static int tunnelLocation[] = new int[2]; // location of the tunnel
+	public static int tunnelEnd[] = new int[2]; // location of the tunnel end
+	public static int trapLocation[] = new int[2]; // location of the trap
+	public static String gameResult = null; // Text for game result
 
-	public static Pane cell[][] = new Pane[11][11];
-	public static Player player = new Player(calories, calories_cost, nougat);
-	public static Monster monster = new Monster();
-	public static Monster childMonster = new Monster();
+	public static Pane cell[][] = new Pane[11][11]; // Game Board
+	public static Player player = new Player(calories, calories_cost, nougat); // Player
+	public static Monster monster = new Monster(); // New Monster set
+	public static Monster childMonster = new Monster(); // Baby Monster
 
+	// Pane Style for Monster
 	public static final String styleMonster = "-fx-background-color : green;-fx-border-color : black";
+	// Pane Style for Player
 	public static final String stylePlayer = "-fx-background-color : yellow;-fx-border-color : black";
+	// Pane Style for Clear Pane
 	public static final String styleClear = "-fx-background-color : white;-fx-border-color : black";
+	// Pane Style for Bule point
 	public static final String stylePoint = "-fx-background-color : blue;-fx-border-color : black";
+	// Pane Style for Trap
 	public static final String styleTrap = "-fx-background-color : black;-fx-border-color : black";
+	// Pane Style for Tunnel
 	public static final String styleTunnel = "-fx-background-color : orange;-fx-border-color : black";
-	
 
-	public static final String UP = "U";
-	public static final String DOWN = "D";
-	public static final String LEFT = "L";
-	public static final String RIGHT = "R";
-	public static final String LEAP = "LEAP";
+	public static final String UP = "U"; // Constant For "Up"
+	public static final String DOWN = "D"; // Constant For "Down"
+	public static final String LEFT = "L"; // Constant For "Left"
+	public static final String RIGHT = "R"; // Constant For "Right"
+	public static final String LEAP = "LEAP";// Constant For "Leap"
 
-	private static int unitTime = duration;
-	private int timeToMove = (int) (duration * 0.95);
-	private Thread t1;
-	private Thread t2;
-	private Boolean playerCanMove = false;
-	private boolean littleMonsterExisted = false;
-	private boolean shiftPressed = false;
-	private boolean ctrlPressed = false;
+	private static int unitTime = duration; // Duration for baby monster
+	private int timeToMove = (int) (duration * 0.95); // time baby monster
+	private Thread t1; // Thread 1
+	private Thread t2; // Thread 1
+	private Boolean playerCanMove = false; // Flag to identify player moveable
+	private boolean littleMonsterExisted = false; // check if baby monster
+													// existe
+	private boolean shiftPressed = false; // constant for shift button
+	private boolean ctrlPressed = false; // constant for control button
 
+	// Create game pane
 	GridPane game = new GridPane();
 	int location[] = new int[2];
 
+	/**
+	 * Set initial style for the game pane
+	 */
 	public static void setInitialStyle() {
 		MainController.cell[Player.PlayerX][Player.PlayerY].setStyle(stylePlayer);
 		MainController.cell[Monster.MonsterInitialX][Monster.MonsterInitialY].setStyle(styleMonster);
 	}
 
+	/**
+	 * Action handler for action button Start the game, create a thread for
+	 * monster
+	 * 
+	 * @param Event
+	 */
 	public void Start(ActionEvent event2) {
 		// Create Player and Monster
 		t1 = new Thread(new Runnable() {
@@ -99,9 +115,10 @@ public class MainController {
 				int score = 0;
 				while (time >= 0) {
 
-					String t = Integer.toString(time);
-					String s = Integer.toString(score);
-					String c = Integer.toString(Player.calories);
+					String t = Integer.toString(time); // timer
+					String s = Integer.toString(score); // player score
+					String c = Integer.toString(Player.calories); // calories
+																	// left
 
 					// Control Trap
 					if (trapTime > 0) {
@@ -110,15 +127,15 @@ public class MainController {
 							player.setOriginal(trapLocation[0], trapLocation[1]);
 						}
 					}
-					
-					//Control Tunnel Building Time
-					if(tunnelTime >0){
+
+					// Control Tunnel Building Time
+					if (tunnelTime > 0) {
 						tunnelTime--;
-						if(tunnelTime == 0){
-							
+						if (tunnelTime == 0) {
+
 						}
 					}
-
+					// Create baby monster
 					if (time == (int) (duration * 0.9) || time == (int) (duration * 0.8)) {
 						if (!littleMonsterExisted) {
 							Start2(null);
@@ -127,12 +144,13 @@ public class MainController {
 					}
 					time--;
 					score++;
+
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
-							l_timer.setText(t);
-							l_cleft.setText(c);
-							l_score.setText(s);
+							l_timer.setText(t); // timer
+							l_cleft.setText(c); // calories
+							l_score.setText(s); // score
 							// Control Monster
 							direction = monster.Get_Direction(Player.PlayerX, Player.PlayerY);
 							location = monster.GetNewLocation(direction, monster);
@@ -148,11 +166,15 @@ public class MainController {
 		try {
 			h_score.setText(LoginController.LoginUserScore);
 		} catch (Exception e) {
-
 		}
 		playerCanMove = true;
 	}
 
+	/**
+	 * Create thread for baby monster
+	 * 
+	 * @param Event
+	 */
 	public void Start2(ActionEvent event2) {
 		t2 = new Thread(new Runnable() {
 			private String direction;
@@ -185,6 +207,12 @@ public class MainController {
 		t2.start();
 	}
 
+	/**
+	 * Key action handler for player skip
+	 * 
+	 * @param Event
+	 * @throws Exception
+	 */
 	public void handleKeyPressed(KeyEvent event) throws Exception {
 		if (event.getCode() == KeyCode.CONTROL) {
 			ctrlPressed = true;
@@ -192,7 +220,7 @@ public class MainController {
 		if (event.getCode() == KeyCode.SHIFT) {
 			shiftPressed = true;
 		}
-		
+
 		if (event.getCode() == KeyCode.ENTER) {
 			Start(null);
 		}
@@ -209,9 +237,14 @@ public class MainController {
 			moveL(null);
 		}
 		checkResult();
-	
 	}
 
+	/**
+	 * Handler for key release event
+	 * 
+	 * @param Event
+	 * @throws Exception
+	 */
 	public void handleKeyReleased(KeyEvent event) throws Exception {
 		if (event.getCode() == KeyCode.CONTROL) {
 			ctrlPressed = false;
@@ -221,26 +254,22 @@ public class MainController {
 		}
 	}
 
-	public void buttonUClicked(MouseEvent mouseEvent) {
-		if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-
-			if (mouseEvent.getClickCount() == 2) {
-				System.out.println("Double clicked A_button");
-			}
-			if (mouseEvent.getClickCount() == 1) {
-				System.out.println("Single clicked A_button");
-			}
-			if (mouseEvent.getClickCount() == 3) {
-				System.out.println("Triple clicked A_button");
-			}
-		}
-	}
+	/**
+	 * public void buttonUClicked(MouseEvent mouseEvent) { if
+	 * (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+	 * 
+	 * if (mouseEvent.getClickCount() == 2) { System.out.println(
+	 * "Double clicked A_button"); } if (mouseEvent.getClickCount() == 1) {
+	 * System.out.println("Single clicked A_button"); } if
+	 * (mouseEvent.getClickCount() == 3) { System.out.println(
+	 * "Triple clicked A_button"); } } }
+	 */
 
 	// Move up
 	public void moveU(ActionEvent event) throws Exception {
-		boolean result = player.movePlayer(UP, playerCanMove,shiftPressed,ctrlPressed);
+		boolean result = player.movePlayer(UP, playerCanMove, shiftPressed, ctrlPressed);
 		if (result == false) {
-			gresult.setText(gameResult);
+			gresult.setText(gameResult); // display game result
 			gameOver();
 			return;
 		}
@@ -248,9 +277,9 @@ public class MainController {
 
 	// Move down
 	public void moveD(ActionEvent event) throws Exception {
-		boolean result = player.movePlayer(DOWN, playerCanMove,shiftPressed,ctrlPressed);
+		boolean result = player.movePlayer(DOWN, playerCanMove, shiftPressed, ctrlPressed);
 		if (result == false) {
-			gresult.setText(gameResult);
+			gresult.setText(gameResult); // display game result
 			gameOver();
 			return;
 		}
@@ -258,9 +287,9 @@ public class MainController {
 
 	// Move left
 	public void moveL(ActionEvent event) throws Exception {
-		boolean result = player.movePlayer(LEFT, playerCanMove,shiftPressed,ctrlPressed);
+		boolean result = player.movePlayer(LEFT, playerCanMove, shiftPressed, ctrlPressed);
 		if (result == false) {
-			gresult.setText(gameResult);
+			gresult.setText(gameResult); // display game result
 			gameOver();
 			return;
 		}
@@ -268,14 +297,19 @@ public class MainController {
 
 	// Move down
 	public void moveR(ActionEvent event) throws Exception {
-		boolean result = player.movePlayer(RIGHT, playerCanMove,shiftPressed,ctrlPressed);
+		boolean result = player.movePlayer(RIGHT, playerCanMove, shiftPressed, ctrlPressed);
 		if (result == false) {
-			gresult.setText(gameResult);
+			gresult.setText(gameResult); // display game result
 			gameOver();
 			return;
 		}
 	}
 
+	/**
+	 * time interval for each move
+	 * 
+	 * @param time
+	 */
 	public void delay(int time) {
 		try {
 			Thread.sleep(time);
@@ -284,8 +318,13 @@ public class MainController {
 		}
 	}
 
+	/**
+	 * Action handler for trap
+	 * 
+	 * @param Event
+	 */
 	public void Trap(ActionEvent event1) {
-		//System.out.println("trap");
+		// System.out.println("trap");
 		if (Player.calories - Player.calories_cost >= 50 && trapTime == 0) {
 			player.setTrap(Player.PlayerX, Player.PlayerY);
 			trapTime = 5;
@@ -293,15 +332,21 @@ public class MainController {
 			trapLocation[1] = Player.PlayerY;
 		}
 	}
-	
-	public void Tunnel(){
+
+	/**
+	 * Button handler for tunnel
+	 */
+	public void Tunnel() {
 		tunnelLocation[0] = Player.PlayerX;
-		tunnelLocation[1]= Player.PlayerY;
+		tunnelLocation[1] = Player.PlayerY;
 		tunnelEnd = player.buildTunnel();
 		tunnelTime = 3;
 		tunnelFlag = true;
 	}
 
+	/**
+	 * Pause the game
+	 */
 	public void Pause() {
 		try {
 			playerCanMove = false;
@@ -312,6 +357,9 @@ public class MainController {
 		}
 	}
 
+	/**
+	 * Resume the game
+	 */
 	public void Resume() {
 		try {
 			playerCanMove = true;
@@ -321,6 +369,12 @@ public class MainController {
 		}
 	}
 
+	/**
+	 * Setting game variables
+	 * 
+	 * @param Event
+	 * @throws Exception
+	 */
 	public void Setting(ActionEvent event) throws Exception {
 		Stage primaryStage = new Stage();
 		Parent root = FXMLLoader.load(getClass().getResource("/application/Setting.fxml"));
@@ -330,6 +384,9 @@ public class MainController {
 		primaryStage.show();
 	}
 
+	/**
+	 * Check game result
+	 */
 	public void checkResult() {
 		if (Player.PlayerX == monster.MonsterX && Player.PlayerY == monster.MonsterY) {
 			gresult.setText("You Caught by Monster. Game Over!");
@@ -350,6 +407,9 @@ public class MainController {
 		}
 	}
 
+	/**
+	 * Save player score to data base
+	 */
 	public void saveScore() {
 		if (Integer.parseInt(l_score.getText()) > Integer.parseInt(h_score.getText())) {
 
@@ -368,6 +428,9 @@ public class MainController {
 		}
 	}
 
+	/**
+	 * Game over process
+	 */
 	public void gameOver() {
 		playerCanMove = false;
 		try {

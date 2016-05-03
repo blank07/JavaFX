@@ -32,7 +32,12 @@ public class LoginController {
 	public static String LoginUser;
 	public static String LoginUserScore;
 	public static int LoginUserId;
-
+/**
+ * Connect to data base
+ * @param e
+ * @throws IOException
+ * @throws SQLException
+ */
 	public void LoginWithDB(ActionEvent e) throws IOException, SQLException {
 		
 		try{
@@ -44,6 +49,7 @@ public class LoginController {
 			String passwordL = pword.getText();
 			String result="";
 			
+			//creat connection to data base
 			Connection myConn = DriverManager.getConnection(url, usernameDB, passwordDB);
 			Statement myStmt = myConn.createStatement();
 
@@ -82,6 +88,7 @@ public class LoginController {
 					result = "User Not Exist";
 				}
 			}
+			//Set successful result text
 			lb.setText(result);
 			if(result.equals("Succeed")){
 				lb.setTextFill(Color.GREEN);
@@ -93,10 +100,13 @@ public class LoginController {
 			lb.setText("Not Connecting to DataBase");
 			lb.setTextFill(Color.RED);
 		}
-		
-		
 }
 	
+	/**
+	 * Action handler for login button
+	 * @param event
+	 * @throws Exception
+	 */
 	public void Login(ActionEvent event) throws Exception {
 
 		Main.primaryStageLogin.hide();
@@ -115,11 +125,19 @@ public class LoginController {
 		MainController.setInitialStyle();
 	}
 
+	/**
+	 * Action handler for cancel button
+	 * @param Event
+	 */
 	public void Cancel(ActionEvent event1) {
 		System.out.println(" Closing...");
 		System.exit(0);
 	}
 	
+	/**
+	 * Action handler for Register button
+	 * @param Event
+	 */
 	public void Register(ActionEvent event1) throws Exception {
 		Stage primaryStage = new Stage();
 		Parent root = FXMLLoader.load(getClass().getResource("/application/Register.fxml"));

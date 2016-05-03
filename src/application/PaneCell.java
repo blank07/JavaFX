@@ -6,12 +6,15 @@ import javafx.scene.layout.Pane;
 public class PaneCell extends Pane {
 
 	public PaneCell(int x, int y) {
-		String s = "     N";
-		Label l = new Label(s);
+		String s = "     N";  //N for nouget
+		Label l = new Label(s); //Label for nouget
 		
 		String ss = " ";
 		Label ll = new Label(ss);
 
+		/**
+		 * Set the cell style and display
+		 */
 		if ((x % 5 == 0) || (y % 5 == 0 && x % 5 != 0)) {
 			if (x == 0 && y == 0) {
 				this.getChildren().add(ll);

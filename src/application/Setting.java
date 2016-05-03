@@ -24,7 +24,11 @@ public class Setting {
 	@FXML
 	private CheckBox Invi;
 
-
+	/**
+	 * Update the value for each variable
+	 * 
+	 * @param event
+	 */
 	public void Save(ActionEvent event1) {
 		System.out.println(" Saving...");
 
@@ -62,7 +66,7 @@ public class Setting {
 		if (r_fast.isSelected()) {
 			MainController.delay_t = 300;
 		}
-		if (Invi.isSelected()){
+		if (Invi.isSelected()) {
 			Monster.invisibleAllowed = true;
 		}
 	}
