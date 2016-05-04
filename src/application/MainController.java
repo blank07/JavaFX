@@ -254,16 +254,20 @@ public class MainController {
 		}
 	}
 
-	/**
-	 * public void buttonUClicked(MouseEvent mouseEvent) { if
-	 * (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-	 * 
-	 * if (mouseEvent.getClickCount() == 2) { System.out.println(
-	 * "Double clicked A_button"); } if (mouseEvent.getClickCount() == 1) {
-	 * System.out.println("Single clicked A_button"); } if
-	 * (mouseEvent.getClickCount() == 3) { System.out.println(
-	 * "Triple clicked A_button"); } } }
-	 */
+	public void buttonUClicked(MouseEvent mouseEvent) {
+		if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+
+			if (mouseEvent.getClickCount() == 2) {
+				System.out.println("Double clicked A_button");
+			}
+			if (mouseEvent.getClickCount() == 1) {
+				System.out.println("Single clicked A_button");
+			}
+			if (mouseEvent.getClickCount() == 3) {
+				System.out.println("Triple clicked A_button");
+			}
+		}
+	}
 
 	// Move up
 	public void moveU(ActionEvent event) throws Exception {
