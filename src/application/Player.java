@@ -27,11 +27,18 @@ public class Player extends Moveable {
 
 		if (PlayerX == MainController.tunnelLocation[0] && PlayerY == MainController.tunnelLocation[1]
 				&& MainController.tunnelFlag == true) {
-			// move player to new location
-			MainController.cell[MainController.tunnelEnd[0]][MainController.tunnelEnd[1]]
-					.setStyle(MainController.stylePlayer);
-			PlayerX = MainController.tunnelEnd[0];
-			PlayerY = MainController.tunnelEnd[1];
+			if (calories - 20 >= 0) {
+				// move player to new location
+				MainController.cell[MainController.tunnelEnd[0]][MainController.tunnelEnd[1]]
+						.setStyle(MainController.stylePlayer);
+				setOriginal(PlayerX, PlayerY);
+				PlayerX = MainController.tunnelEnd[0];
+				PlayerY = MainController.tunnelEnd[1];
+				calories = calories - 20;
+			} else {
+				MainController.gameResult = "No Enough Energy.";
+				return;
+			}
 
 		} else {
 			if (result == true) {
@@ -44,9 +51,12 @@ public class Player extends Moveable {
 				MainController.cell[x][y].setStyle(MainController.stylePlayer);
 				PlayerX = x;
 				PlayerY = y;
+				calories = calories - calories_cost;
 			}
 			// check if there is nougats
 			checkNougats(PlayerX, PlayerY);
+
+			MainController.calories = calories;
 		}
 	}
 
@@ -71,11 +81,16 @@ public class Player extends Moveable {
 
 	/**
 	 * Set Trap
-	 * @param coordinate x
-	 * @param coordinate y
+	 * 
+	 * @param coordinate
+	 *            x
+	 * @param coordinate
+	 *            y
 	 */
 	public void setTrap(int x, int y) {
 		MainController.cell[x][y].setStyle(MainController.styleTrap);
+		calories = calories - 50;
+		MainController.calories = calories;
 	}
 
 	public boolean movePlayer(String d, boolean playerCanMove, boolean shiftPressed, boolean ctrlPressed) {
@@ -109,13 +124,24 @@ public class Player extends Moveable {
 				x += s;
 			break;
 		default:
-
+			;
 		}
 		if (playerCanMove) {
-			if (Player.calories - Player.calories_cost >= 0)
-				Cell_Move(x, y);
-			else {
-				MainController.gameResult = "No Enough Energy. Game Over!";
+			if (Player.calories - Player.calories_cost >= 0) {
+				if (PlayerX == MainController.tunnelLocation[0] && PlayerY == MainController.tunnelLocation[1]
+						&& MainController.tunnelFlag == true) {
+					if (Player.calories - 20 >= 0) {
+						Cell_Move(x, y);
+					} else {
+						MainController.gameResult = "You Don't have Enough Energy.";
+						result = false;
+					}
+				} else {
+					Cell_Move(x, y);
+				}
+
+			} else {
+				MainController.gameResult = "You Don't have Enough Energy.";
 				result = false;
 			}
 		} else {
@@ -126,19 +152,26 @@ public class Player extends Moveable {
 
 	/**
 	 * build a tunnel
+	 * 
 	 * @return
 	 */
 	public int[] buildTunnel() {
 		int endLocation[] = new int[2];
 		endLocation = setTunnel(MainController.styleTunnel, PlayerX, PlayerY);
+		calories = calories - 50;
+		MainController.calories = calories;
 		return endLocation;
 	}
 
 	/**
 	 * Set tunnel style
-	 * @param style for tunnel
-	 * @param coordinate x
-	 * @param coordinate y
+	 * 
+	 * @param style
+	 *            for tunnel
+	 * @param coordinate
+	 *            x
+	 * @param coordinate
+	 *            y
 	 * @return location of the tunnel end
 	 */
 	private int[] setTunnel(String style, int x, int y) {
@@ -164,7 +197,7 @@ public class Player extends Moveable {
 					MainController.cell[PlayerX][i].setStyle(style);
 				}
 				endLocation[0] = x;
-				endLocation[1] = y + 5;
+				endLocation[1] = 5;
 			} else {
 				for (int j = y + 1; j < y + 5; j++) {
 					MainController.cell[x][j].setStyle(style);
@@ -173,6 +206,7 @@ public class Player extends Moveable {
 				endLocation[1] = y + 5;
 			}
 		}
+
 		return endLocation;
 	}
 

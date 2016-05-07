@@ -44,7 +44,7 @@ public class MainController {
 	public static int calories_cost = 2; // Calories cost for each move
 	public static int nougat = 6; // calories get from each nougat
 	public static int duration = 100; // Duration of the game
-	public static int delay_t = 1000; // time unit for the monster to move
+	public static int delay_t = 10000; // time unit for the monster to move
 	public static int trapTime = 0; // Time to build trap
 	public static int tunnelTime = 0; // time to build tunnel
 	public static int tunnelLocation[] = new int[2]; // location of the tunnel
@@ -117,8 +117,8 @@ public class MainController {
 
 					String t = Integer.toString(time); // timer
 					String s = Integer.toString(score); // player score
-					String c = Integer.toString(Player.calories); // calories
-																	// left
+					// String c = Integer.toString(Player.calories); // calories
+					// left
 
 					// Control Trap
 					if (trapTime > 0) {
@@ -149,7 +149,7 @@ public class MainController {
 						@Override
 						public void run() {
 							l_timer.setText(t); // timer
-							l_cleft.setText(c); // calories
+							// l_cleft.setText(c); // calories
 							l_score.setText(s); // score
 							// Control Monster
 							direction = monster.Get_Direction(Player.PlayerX, Player.PlayerY);
@@ -276,6 +276,9 @@ public class MainController {
 			gresult.setText(gameResult); // display game result
 			gameOver();
 			return;
+		} else {
+			String c = Integer.toString(Player.calories); // calories
+			l_cleft.setText(c); // calories
 		}
 	}
 
@@ -286,6 +289,9 @@ public class MainController {
 			gresult.setText(gameResult); // display game result
 			gameOver();
 			return;
+		} else {
+			String c = Integer.toString(Player.calories); // calories
+			l_cleft.setText(c); // calories
 		}
 	}
 
@@ -296,6 +302,9 @@ public class MainController {
 			gresult.setText(gameResult); // display game result
 			gameOver();
 			return;
+		} else {
+			String c = Integer.toString(Player.calories); // calories
+			l_cleft.setText(c); // calories
 		}
 	}
 
@@ -306,6 +315,9 @@ public class MainController {
 			gresult.setText(gameResult); // display game result
 			gameOver();
 			return;
+		} else {
+			String c = Integer.toString(Player.calories); // calories
+			l_cleft.setText(c); // calories
 		}
 	}
 
@@ -334,6 +346,8 @@ public class MainController {
 			trapTime = 5;
 			trapLocation[0] = Player.PlayerX;
 			trapLocation[1] = Player.PlayerY;
+			String c = Integer.toString(Player.calories); // calories
+			l_cleft.setText(c); // calories
 		}
 	}
 
@@ -341,11 +355,15 @@ public class MainController {
 	 * Button handler for tunnel
 	 */
 	public void Tunnel() {
-		tunnelLocation[0] = Player.PlayerX;
-		tunnelLocation[1] = Player.PlayerY;
-		tunnelEnd = player.buildTunnel();
-		tunnelTime = 3;
-		tunnelFlag = true;
+		if (Player.calories - Player.calories_cost >= 50 && tunnelFlag == false) {
+			tunnelLocation[0] = Player.PlayerX;
+			tunnelLocation[1] = Player.PlayerY;
+			tunnelEnd = player.buildTunnel();
+			tunnelTime = 3;
+			tunnelFlag = true;
+			String c = Integer.toString(Player.calories); // calories
+			l_cleft.setText(c); // calories
+		}
 	}
 
 	/**
