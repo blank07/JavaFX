@@ -44,7 +44,7 @@ public class MainController {
 	public static int calories_cost = 2; // Calories cost for each move
 	public static int nougat = 6; // calories get from each nougat
 	public static int duration = 100; // Duration of the game
-	public static int delay_t = 10000; // time unit for the monster to move
+	public static int delay_t = 1000; // time unit for the monster to move
 	public static int trapTime = 0; // Time to build trap
 	public static int tunnelTime = 0; // time to build tunnel
 	public static int tunnelLocation[] = new int[2]; // location of the tunnel
@@ -220,7 +220,6 @@ public class MainController {
 		if (event.getCode() == KeyCode.SHIFT) {
 			shiftPressed = true;
 		}
-
 		if (event.getCode() == KeyCode.ENTER) {
 			Start(null);
 		}

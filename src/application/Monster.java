@@ -12,7 +12,6 @@ public class Monster extends Moveable {
 	public Monster() {
 		MonsterX = MonsterInitialX;
 		MonsterY = MonsterInitialY;
-	//	MainController.cell[MonsterX][MonsterY].setStyle(MainController.styleMonster);
 	}
 
 	public String Get_Direction(int pX, int pY) {
