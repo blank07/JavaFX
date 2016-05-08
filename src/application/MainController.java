@@ -98,26 +98,28 @@ public class MainController {
 		MainController.cell[Player.PlayerX][Player.PlayerY].setStyle(stylePlayer);
 		MainController.cell[Monster.MonsterInitialX][Monster.MonsterInitialY].setStyle(styleMonster);
 	}
-	
-	public void Reset() throws IOException{
+
+	public void Reset() throws IOException {
 		l_timer.setText("100");
-		playerCanMove =false;
-		if(littleMonsterExisted){
-	 		t2.stop();	 
-	 		littleMonsterExisted = false;
-	 		MainController.cell[childMonster.MonsterX][childMonster.MonsterY].setStyle(styleClear);
-	 	}
-	 	t1.stop();
-	 	MainController.cell[monster.MonsterX][monster.MonsterY].setStyle(styleClear);
-	 	monster.MonsterX = 5;monster.MonsterY =5;
+		playerCanMove = false;
+		if (littleMonsterExisted) {
+			t2.stop();
+			littleMonsterExisted = false;
+			MainController.cell[childMonster.MonsterX][childMonster.MonsterY].setStyle(styleClear);
+		}
+		t1.stop();
+		MainController.cell[monster.MonsterX][monster.MonsterY].setStyle(styleClear);
+		monster.MonsterX = 5;
+		monster.MonsterY = 5;
 		MainController.cell[Monster.MonsterInitialX][Monster.MonsterInitialY].setStyle(styleMonster);
-	 	
-	 	
- 		MainController.cell[Player.PlayerX][Player.PlayerY].setStyle(styleClear);
- 		Player.PlayerX = 0; Player.PlayerY = 0;
- 		MainController.cell[Player.PlayerX][Player.PlayerY].setStyle(stylePlayer);
+
+		MainController.cell[Player.PlayerX][Player.PlayerY].setStyle(styleClear);
+		Player.PlayerX = 0;
+		Player.PlayerY = 0;
+		MainController.cell[Player.PlayerX][Player.PlayerY].setStyle(stylePlayer);
+
 	}
-	
+
 	/**
 	 * Action handler for action button Start the game, create a thread for
 	 * monster
