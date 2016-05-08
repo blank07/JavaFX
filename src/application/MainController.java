@@ -1,5 +1,6 @@
 package application;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -79,7 +80,7 @@ public class MainController {
 	private static int unitTime = duration; // Duration for baby monster
 	private int timeToMove = (int) (duration * 0.95); // time baby monster
 	private Thread t1; // Thread 1
-	private Thread t2; // Thread 1
+	private Thread t2; // Thread 2
 	private Boolean playerCanMove = false; // Flag to identify player moveable
 	private boolean littleMonsterExisted = false; // check if baby monster
 													// existe
@@ -97,7 +98,26 @@ public class MainController {
 		MainController.cell[Player.PlayerX][Player.PlayerY].setStyle(stylePlayer);
 		MainController.cell[Monster.MonsterInitialX][Monster.MonsterInitialY].setStyle(styleMonster);
 	}
-
+	
+	public void Reset() throws IOException{
+		l_timer.setText("100");
+		playerCanMove =false;
+		if(littleMonsterExisted){
+	 		t2.stop();	 
+	 		littleMonsterExisted = false;
+	 		MainController.cell[childMonster.MonsterX][childMonster.MonsterY].setStyle(styleClear);
+	 	}
+	 	t1.stop();
+	 	MainController.cell[monster.MonsterX][monster.MonsterY].setStyle(styleClear);
+	 	monster.MonsterX = 5;monster.MonsterY =5;
+		MainController.cell[Monster.MonsterInitialX][Monster.MonsterInitialY].setStyle(styleMonster);
+	 	
+	 	
+ 		MainController.cell[Player.PlayerX][Player.PlayerY].setStyle(styleClear);
+ 		Player.PlayerX = 0; Player.PlayerY = 0;
+ 		MainController.cell[Player.PlayerX][Player.PlayerY].setStyle(stylePlayer);
+	}
+	
 	/**
 	 * Action handler for action button Start the game, create a thread for
 	 * monster

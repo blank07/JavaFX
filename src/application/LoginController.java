@@ -32,6 +32,8 @@ public class LoginController {
 	public static String LoginUser;
 	public static String LoginUserScore;
 	public static int LoginUserId;
+	
+	
 /**
  * Connect to data base
  * @param e
@@ -72,16 +74,7 @@ public class LoginController {
 							LoginUserId = myRs3.getInt("id");
 						}
 						
-						Main.primaryStageLogin.hide();
-						Stage gameStage = new Stage();
-						Pane root = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
-						// Create game board, player, monster
-						Board game = new Board();
-						root.getChildren().addAll(game);
-						Scene scene = new Scene(root);
-						gameStage.setScene(scene);
-						gameStage.show();
-						MainController.setInitialStyle();
+						setMainScene();
 					}
 					break;
 				}else{
@@ -109,20 +102,7 @@ public class LoginController {
 	 */
 	public void Login(ActionEvent event) throws Exception {
 
-		Main.primaryStageLogin.hide();
-
-		Stage gameStage = new Stage();
-		Pane root = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
-
-		// Create game board, player, monster
-		Board game = new Board();
-		root.getChildren().addAll(game);
-
-		Scene scene = new Scene(root);
-		gameStage.setScene(scene);
-		gameStage.show();
-		
-		MainController.setInitialStyle();
+		setMainScene();
 	}
 
 	/**
@@ -147,5 +127,16 @@ public class LoginController {
 		primaryStage.show();
 	}
 	
-	
+	public void setMainScene() throws IOException{
+		Main.primaryStageLogin.hide();
+		Stage gameStage = new Stage();
+		Pane root = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
+		// Create game board, player, monster
+		Board game = new Board();
+		root.getChildren().addAll(game);
+		Scene scene = new Scene(root);
+		gameStage.setScene(scene);
+		gameStage.show();
+		MainController.setInitialStyle();
+	}
 }
