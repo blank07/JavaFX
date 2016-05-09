@@ -39,6 +39,8 @@ public class MainController {
 	public Label gresult; // Text of Game result
 	@FXML
 	private Label l_cleft; // Calories left
+	@FXML
+	private static Button resetBtn;
 
 	public static boolean tunnelFlag; // Flag to identify Tunnel Exist
 	public static int calories = 40; // Calories for player, initial as 40
@@ -103,11 +105,15 @@ public class MainController {
 		l_timer.setText("100");
 		playerCanMove = false;
 		if (littleMonsterExisted) {
-			t2.stop();
+			try{
+				t2.stop();
+			}catch(Exception E){}
 			littleMonsterExisted = false;
 			MainController.cell[childMonster.MonsterX][childMonster.MonsterY].setStyle(styleClear);
 		}
-		t1.stop();
+		try{
+			t1.stop();
+		}catch(Exception E){}
 		MainController.cell[monster.MonsterX][monster.MonsterY].setStyle(styleClear);
 		monster.MonsterX = 5;
 		monster.MonsterY = 5;
