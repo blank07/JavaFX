@@ -83,7 +83,7 @@ public class MainController {
 	private int timeToMove = (int) (duration * 0.95); // time baby monster
 	private Thread t1; // Thread 1
 	private Thread t2; // Thread 2
-	private Boolean playerCanMove = false; // Flag to identify player moveable
+	private boolean playerCanMove = false; // Flag to identify player moveable
 	private boolean littleMonsterExisted = false; // check if baby monster
 													// existe
 	private boolean shiftPressed = false; // constant for shift button
