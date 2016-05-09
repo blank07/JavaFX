@@ -2,9 +2,6 @@ package application;
 
 public abstract class Moveable {
 
-	public Moveable() {
-
-	}
 
 	public abstract void Cell_Move(int x, int y);
 
