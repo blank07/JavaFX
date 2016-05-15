@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.util.logging.Logger;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -41,6 +42,8 @@ public class MainController {
 	private Label l_cleft; // Calories left
 	@FXML
 	private static Button resetBtn;
+	
+	private final static Logger kLogger = Logger.getLogger(MainController.class.getName());
 
 	public static boolean tunnelFlag; // Flag to identify Tunnel Exist
 	public static int calories = 40; // Calories for player, initial as 40
@@ -175,8 +178,12 @@ public class MainController {
 							littleMonsterExisted = true;
 						}
 					}
+<<<<<<< Updated upstream
 					time-=1;
 					System.out.println(time);
+=======
+					time--;
+>>>>>>> Stashed changes
 					score++;
 					
 					if(time == 0){

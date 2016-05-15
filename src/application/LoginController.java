@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,6 +35,7 @@ public class LoginController {
 	public static String LoginUserScore;
 	public static int LoginUserId;
 	
+	private final static Logger kLogger = Logger.getLogger(LoginController.class.getName());
 	
 /**
  * Connect to data base
@@ -92,6 +95,9 @@ public class LoginController {
 		}catch(Exception ex){
 			lb.setText("Not Connecting to DataBase");
 			lb.setTextFill(Color.RED);
+			
+			kLogger.setLevel(Level.SEVERE);
+			kLogger.severe("Cannot log in!");
 		}
 }
 	
@@ -110,8 +116,8 @@ public class LoginController {
 	 * @param Event
 	 */
 	public void Cancel(ActionEvent event1) {
-		System.out.println(" Closing...");
-		System.exit(0);
+		kLogger.setLevel(Level.INFO);
+		kLogger.info("Log information : Game closed.");
 	}
 	
 	/**
@@ -119,6 +125,9 @@ public class LoginController {
 	 * @param Event
 	 */
 	public void Register(ActionEvent event1) throws Exception {
+		kLogger.setLevel(Level.INFO);
+		kLogger.info("Log information : Register new user!");
+		
 		Stage primaryStage = new Stage();
 		Parent root = FXMLLoader.load(getClass().getResource("/application/Register.fxml"));
 		Scene scene = new Scene(root);
@@ -130,6 +139,8 @@ public class LoginController {
 	 * Action handler for set the Game Board Scene
 	 */
 	public void setMainScene() throws IOException{
+		kLogger.setLevel(Level.INFO);
+		kLogger.info("Log information : Game Starting...");
 		Main.primaryStageLogin.hide();
 		Stage gameStage = new Stage();
 		Pane root = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
