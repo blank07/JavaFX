@@ -74,6 +74,8 @@ public class Setting {
 		}
 		if (Invi.isSelected()) {
 			Monster.invisibleAllowed = true;
+		}else{
+			Monster.invisibleAllowed = false;
 		}
 	}
 
