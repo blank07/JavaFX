@@ -126,7 +126,7 @@ public class MainController {
 		System.out.println("recreat");
 
 		MainController.cell[monster.MonsterX][monster.MonsterY].setStyle(styleClear);
-		monster.MonsterX = 5;
+		monster.MonsterX = 5;  
 		monster.MonsterY = 5;
 		MainController.cell[Monster.MonsterInitialX][Monster.MonsterInitialY].setStyle(styleMonster);
 
