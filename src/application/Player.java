@@ -1,5 +1,8 @@
 package application;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 
@@ -10,6 +13,7 @@ public class Player extends Moveable {
 	public static int calories; // Calories
 	public static int calories_cost; // Calories for each move
 	public static boolean result; // Game result
+	private final static Logger kLogger = Logger.getLogger(Player.class.getName());
 
 	// Constructor
 	public Player(int c, int c_c, int n) {
@@ -91,64 +95,65 @@ public class Player extends Moveable {
 		MainController.cell[x][y].setStyle(MainController.styleTrap);
 		calories = calories - 50;
 		MainController.calories = calories;
+		kLogger.setLevel(Level.INFO);
+		kLogger.info("Log information : Trap built...");
 	}
+
 	/**
 	 * Move player to new place
-	 * */ 
+	 */
 	public boolean movePlayer(String d, boolean playerCanMove, boolean shiftPressed, boolean ctrlPressed) {
-		int s = 1; //the space the player can move
-		if (shiftPressed) {
-			s = 2;
-		}
-		if (ctrlPressed) {
-			s = 3;
-		}
-		boolean result = true;
-
-		int x = PlayerX;
-		int y = PlayerY;
-
-		switch (d) {
-		case MainController.UP:
-			if (y >= s)
-				y -= s;
-			break;
-		case MainController.DOWN:
-			if (y <= 10 - s)
-				y += s;
-			break;
-		case MainController.LEFT:
-			if (x >= s)
-				x -= s;
-			break;
-		case MainController.RIGHT:
-			if (x <= 10 - s)
-				x += s;
-			break;
-		default:
-			;
-		}
-		if (playerCanMove) {
-			if (Player.calories - Player.calories_cost >= 0) {
-				if (PlayerX == MainController.tunnelLocation[0] && PlayerY == MainController.tunnelLocation[1]
-						&& MainController.tunnelFlag == true) {
-					if (Player.calories - 20 >= 0) {
-						Cell_Move(x, y);
-					} else {
-						MainController.gameResult = "You Don't have Enough Energy.";
-						result = false;
-					}
-				} else {
-					Cell_Move(x, y);
-				}
-
-			} else {
-				MainController.gameResult = "You Don't have Enough Energy.";
-				result = false;
+			int s = 1; // the space the player can move
+			if (shiftPressed) {
+				s = 2;
 			}
-		} else {
-			result = false;
-		}
+			if (ctrlPressed) {
+				s = 3;
+			}
+			boolean result = true;
+
+			int x = PlayerX;
+			int y = PlayerY;
+
+			switch (d) {
+			case MainController.UP:
+				if (y >= s)
+					y -= s;
+				break;
+			case MainController.DOWN:
+				if (y <= 10 - s)
+					y += s;
+				break;
+			case MainController.LEFT:
+				if (x >= s)
+					x -= s;
+				break;
+			case MainController.RIGHT:
+				if (x <= 10 - s)
+					x += s;
+				break;
+			default:
+				;
+			}
+			if (playerCanMove) {
+				if (Player.calories - Player.calories_cost >= 0) {
+					if (PlayerX == MainController.tunnelLocation[0] && PlayerY == MainController.tunnelLocation[1]
+							&& MainController.tunnelFlag == true) {
+						if (Player.calories - 20 >= 0) {
+							Cell_Move(x, y);
+						} else {
+							MainController.gameResult = "You Don't have Enough Energy.";
+							result = false;
+						}
+					} else {
+						Cell_Move(x, y);
+					}
+
+				} else {
+					MainController.gameResult = "You Don't have Enough Energy.";
+					result = false;
+				}
+			} 
 		return result;
 	}
 
@@ -162,6 +167,8 @@ public class Player extends Moveable {
 		endLocation = setTunnel(MainController.styleTunnel, PlayerX, PlayerY);
 		calories = calories - 50;
 		MainController.calories = calories;
+		kLogger.setLevel(Level.INFO);
+		kLogger.info("Log information : Tunnel built...");
 		return endLocation;
 	}
 
@@ -208,8 +215,6 @@ public class Player extends Moveable {
 				endLocation[1] = y + 5;
 			}
 		}
-
 		return endLocation;
 	}
-
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javafx.application.Platform;
@@ -42,7 +43,7 @@ public class MainController {
 	private Label l_cleft; // Calories left
 	@FXML
 	private static Button resetBtn;
-	
+
 	private final static Logger kLogger = Logger.getLogger(MainController.class.getName());
 
 	public static boolean tunnelFlag; // Flag to identify Tunnel Exist
@@ -50,7 +51,7 @@ public class MainController {
 	public static int calories_cost = 2; // Calories cost for each move
 	public static int nougat = 6; // calories get from each nougat
 	public static int duration = 100; // Duration of the game
-	public static int delay_t = 1000; // time unit for the monster to move
+	public static int delay_t = 3000; // time unit for the monster to move
 	public static int trapTime = 0; // Time to build trap
 	public static int tunnelTime = 0; // time to build tunnel
 	public static int tunnelLocation[] = new int[2]; // location of the tunnel
@@ -86,9 +87,9 @@ public class MainController {
 	private int timeToMove = (int) (duration * 0.95); // time baby monster
 	private Thread t1; // Thread 1
 	private Thread t2; // Thread 2
+	private boolean win = false;
 	private boolean playerCanMove = false; // Flag to identify player moveable
 	private boolean littleMonsterExisted = false; // check if baby monster
-													// existe
 	private boolean shiftPressed = false; // constant for shift button
 	private boolean ctrlPressed = false; // constant for control button
 
@@ -102,10 +103,13 @@ public class MainController {
 	public static void setInitialStyle() {
 		MainController.cell[Player.PlayerX][Player.PlayerY].setStyle(stylePlayer);
 		MainController.cell[Monster.MonsterInitialX][Monster.MonsterInitialY].setStyle(styleMonster);
+		kLogger.setLevel(Level.INFO);
+		kLogger.info("Log information : Initating...");
+
 	}
 
 	public void Reset() throws IOException {
-		l_timer.setText("100");
+		l_timer.setText(Integer.toString(duration));
 		playerCanMove = false;
 		if (littleMonsterExisted) {
 			try {
@@ -119,6 +123,8 @@ public class MainController {
 			t1.stop();
 		} catch (Exception E) {
 		}
+		System.out.println("recreat");
+
 		MainController.cell[monster.MonsterX][monster.MonsterY].setStyle(styleClear);
 		monster.MonsterX = 5;
 		monster.MonsterY = 5;
@@ -128,7 +134,8 @@ public class MainController {
 		Player.PlayerX = 0;
 		Player.PlayerY = 0;
 		MainController.cell[Player.PlayerX][Player.PlayerY].setStyle(stylePlayer);
-
+		kLogger.setLevel(Level.INFO);
+		kLogger.info("Log information : Reset...");
 	}
 
 	/**
@@ -151,8 +158,12 @@ public class MainController {
 			public void run() {
 				int time = duration;
 				int score = 0;
+
+				// Log information
+				kLogger.setLevel(Level.INFO);
+				kLogger.info("Log information : Game start");
+
 				while (time >= 0) {
-                    boolean b = false;
 					String t = Integer.toString(time); // timer
 					String s = Integer.toString(score); // player score
 
@@ -168,7 +179,7 @@ public class MainController {
 					if (tunnelTime > 0) {
 						tunnelTime--;
 						if (tunnelTime == 0) {
-
+							playerCanMove = true;
 						}
 					}
 					// Create baby monster
@@ -178,33 +189,36 @@ public class MainController {
 							littleMonsterExisted = true;
 						}
 					}
-<<<<<<< Updated upstream
-					time-=1;
-					System.out.println(time);
-=======
-					time--;
->>>>>>> Stashed changes
+					time -= 1;
+					// System.out.println(time);
 					score++;
-					
-					if(time == 0){
-						playerCanMove =false;
+
+					if (time == -1) {
+						playerCanMove = false;
+                        win = true;
+						kLogger.setLevel(Level.INFO);
+						kLogger.info("Time up! You Win!");
 					}
-					if(time < -1 ){
+					if (time < -1) {
 						gameOver();
 					}
-					
+
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
 							l_timer.setText(t); // timer
 							// l_cleft.setText(c); // calories
 							l_score.setText(s); // score
-						
+
 							// Control Monster
 							direction = monster.Get_Direction(Player.PlayerX, Player.PlayerY);
 							location = monster.GetNewLocation(direction, monster);
 							monster.Cell_Move(location[0], location[1]);
-							checkResult();
+							if (win == true) {
+								gresult.setText("Time up! You Win!");
+							} else {
+								checkResult();
+							}
 						}
 					});
 					delay(delay_t);
@@ -212,9 +226,7 @@ public class MainController {
 			}
 		});
 		t1.start();
-		
-		
-		
+
 	}
 
 	/**
@@ -230,9 +242,12 @@ public class MainController {
 			public void run() {
 				int time = duration;
 
+				kLogger.setLevel(Level.INFO);
+				kLogger.info("Log information : Little monster created...");
+
 				while (time >= 0) {
-					time-=2;
-					if(time < -1 ){
+					time -= 2;
+					if (time < -1) {
 						gameOver();
 					}
 					// String c = Integer.toString(Player.calories);
@@ -304,18 +319,6 @@ public class MainController {
 	}
 
 	public void buttonUClicked(MouseEvent mouseEvent) {
-		if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-
-			if (mouseEvent.getClickCount() == 2) {
-				System.out.println("Double clicked A_button");
-			}
-			if (mouseEvent.getClickCount() == 1) {
-				System.out.println("Single clicked A_button");
-			}
-			if (mouseEvent.getClickCount() == 3) {
-				System.out.println("Triple clicked A_button");
-			}
-		}
 	}
 
 	// Move up
@@ -410,6 +413,7 @@ public class MainController {
 			tunnelEnd = player.buildTunnel();
 			tunnelTime = 3;
 			tunnelFlag = true;
+			playerCanMove = false;
 			String c = Integer.toString(Player.calories); // calories
 			l_cleft.setText(c); // calories
 		}
@@ -461,6 +465,10 @@ public class MainController {
 	public void checkResult() {
 		if (Player.PlayerX == monster.MonsterX && Player.PlayerY == monster.MonsterY) {
 			gresult.setText("You Caught by Monster. Game Over!");
+
+			kLogger.setLevel(Level.INFO);
+			kLogger.info("You Caught by Monster. Game Over!");
+
 			gameOver();
 		}
 		if (Player.PlayerX == childMonster.MonsterX && Player.PlayerY == childMonster.MonsterY) {
@@ -472,6 +480,8 @@ public class MainController {
 				}
 			} else {
 				gresult.setText("You Caught by Monster. Game Over!");
+				kLogger.setLevel(Level.INFO);
+				kLogger.info("You Caught by Monster. Game Over!");
 				gameOver();
 			}
 
@@ -505,15 +515,16 @@ public class MainController {
 	public void gameOver() {
 		playerCanMove = false;
 		try {
+
 			t1.stop();
-			
+
 		} catch (Exception Ex) {
-		
+
 		}
-		try{
+		try {
 			t2.stop();
-		}catch (Exception Ex2) {
-	
+		} catch (Exception Ex2) {
+
 		}
 		try {
 			saveScore();

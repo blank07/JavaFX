@@ -152,4 +152,6 @@ public class LoginController {
 		gameStage.show();
 		MainController.setInitialStyle();
 	}
+	
+	
 }

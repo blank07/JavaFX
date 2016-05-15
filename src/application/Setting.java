@@ -1,5 +1,8 @@
 package application;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -24,13 +27,16 @@ public class Setting {
 	@FXML
 	private CheckBox Invi; // the invisibility ability of the monster
 
+	private final static Logger kLogger = Logger.getLogger(LoginController.class.getName());
+
 	/**
 	 * Update the value for each variable
 	 * 
 	 * @param event
 	 */
 	public void Save(ActionEvent event1) {
-		System.out.println(" Saving...");
+		kLogger.setLevel(Level.INFO);
+		kLogger.info("Save setting...");
 
 		// Duration
 		if (tf_duration.getText() != null) {
