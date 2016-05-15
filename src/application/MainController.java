@@ -105,15 +105,17 @@ public class MainController {
 		l_timer.setText("100");
 		playerCanMove = false;
 		if (littleMonsterExisted) {
-			try{
+			try {
 				t2.stop();
-			}catch(Exception E){}
+			} catch (Exception E) {
+			}
 			littleMonsterExisted = false;
 			MainController.cell[childMonster.MonsterX][childMonster.MonsterY].setStyle(styleClear);
 		}
-		try{
+		try {
 			t1.stop();
-		}catch(Exception E){}
+		} catch (Exception E) {
+		}
 		MainController.cell[monster.MonsterX][monster.MonsterY].setStyle(styleClear);
 		monster.MonsterX = 5;
 		monster.MonsterY = 5;
@@ -142,11 +144,9 @@ public class MainController {
 				int time = duration;
 				int score = 0;
 				while (time >= 0) {
-
+                    boolean b = false;
 					String t = Integer.toString(time); // timer
 					String s = Integer.toString(score); // player score
-					// String c = Integer.toString(Player.calories); // calories
-					// left
 
 					// Control Trap
 					if (trapTime > 0) {
@@ -171,6 +171,7 @@ public class MainController {
 						}
 					}
 					time--;
+				
 					score++;
 
 					Platform.runLater(new Runnable() {
@@ -196,6 +197,7 @@ public class MainController {
 		} catch (Exception e) {
 		}
 		playerCanMove = true;
+		
 	}
 
 	/**

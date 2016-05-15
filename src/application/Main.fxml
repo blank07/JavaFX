@@ -53,13 +53,8 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="newHighScore" layoutX="646.0" layoutY="510.0" prefHeight="35.0" prefWidth="176.0" text="xxxxxxxxx" textFill="#0ed72c">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Label>
       <Button fx:id="btn_trap" focusTraversable="false" layoutX="648.0" layoutY="360.0" mnemonicParsing="false" onAction="#Trap" prefHeight="35.0" prefWidth="70.0" text="Trap" />
       <Button focusTraversable="false" layoutX="731.0" layoutY="360.0" mnemonicParsing="false" onAction="#Tunnel" prefHeight="35.0" prefWidth="70.0" text="Tunnel" />
-      <Button focusTraversable="false" layoutX="648.0" layoutY="416.0" mnemonicParsing="false" onAction="#Reset" prefHeight="35.0" prefWidth="70.0" text="Reset" />
+      <Button focusTraversable="false" layoutX="691.0" layoutY="416.0" mnemonicParsing="false" onAction="#Reset" prefHeight="35.0" prefWidth="70.0" text="Reset" />
    </children>
 </AnchorPane>
