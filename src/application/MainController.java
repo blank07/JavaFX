@@ -135,6 +135,11 @@ public class MainController {
 	 * @param Event
 	 */
 	public void Start(ActionEvent event2) {
+		try {
+			h_score.setText(LoginController.LoginUserScore);
+		} catch (Exception e) {
+		}
+		playerCanMove = true;
 		// Create Player and Monster
 		t1 = new Thread(new Runnable() {
 			private String direction;
@@ -170,16 +175,24 @@ public class MainController {
 							littleMonsterExisted = true;
 						}
 					}
-					time--;
-				
+					time-=1;
+					System.out.println(time);
 					score++;
-
+					
+					if(time == 0){
+						playerCanMove =false;
+					}
+					if(time < -1 ){
+						gameOver();
+					}
+					
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
 							l_timer.setText(t); // timer
 							// l_cleft.setText(c); // calories
 							l_score.setText(s); // score
+						
 							// Control Monster
 							direction = monster.Get_Direction(Player.PlayerX, Player.PlayerY);
 							location = monster.GetNewLocation(direction, monster);
@@ -192,11 +205,8 @@ public class MainController {
 			}
 		});
 		t1.start();
-		try {
-			h_score.setText(LoginController.LoginUserScore);
-		} catch (Exception e) {
-		}
-		playerCanMove = true;
+		
+		
 		
 	}
 
@@ -214,7 +224,10 @@ public class MainController {
 				int time = duration;
 
 				while (time >= 0) {
-					time--;
+					time-=2;
+					if(time < -1 ){
+						gameOver();
+					}
 					// String c = Integer.toString(Player.calories);
 					Platform.runLater(new Runnable() {
 						@Override
@@ -486,9 +499,14 @@ public class MainController {
 		playerCanMove = false;
 		try {
 			t1.stop();
-			t2.stop();
+			
 		} catch (Exception Ex) {
-
+		
+		}
+		try{
+			t2.stop();
+		}catch (Exception Ex2) {
+	
 		}
 		try {
 			saveScore();

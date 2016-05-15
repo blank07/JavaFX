@@ -15,15 +15,15 @@ import javafx.scene.paint.Color;
 public class RegisterController {
 
 	@FXML
-	private Label lbl;
+	private Label lbl; // label to show the result 
 	@FXML
-	private TextField userN;
+	private TextField userN; // user name TextField
 	@FXML
-	private TextField passW;
+	private TextField passW; // password TextField
 	@FXML
-	private TextField nam;
+	private TextField nam; // name TextField
 	@FXML
-	private TextField addr;
+	private TextField addr; //address TextField
 
 	/**
 	 * Register a new user

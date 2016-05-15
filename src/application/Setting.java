@@ -8,21 +8,21 @@ import javafx.scene.control.TextField;
 
 public class Setting {
 	@FXML
-	private TextField tf_duration;
+	private TextField tf_duration; // Duration TextField 
 	@FXML
-	private TextField tf_calories;
+	private TextField tf_calories; // Calories TextField 
 	@FXML
-	private TextField tf_cal_cost;
+	private TextField tf_cal_cost; // Calories cost TextField
 	@FXML
-	private TextField tf_cal_nougat;
+	private TextField tf_cal_nougat; // Calories nougat TextField 
 	@FXML
-	private RadioButton r_slow;
+	private RadioButton r_slow; // Speed of the Monster can move(slow)
 	@FXML
-	private RadioButton r_medium;
+	private RadioButton r_medium; // Speed of the Monster can move(medium)
 	@FXML
-	private RadioButton r_fast;
+	private RadioButton r_fast; // Speed of the Monster can move(fast)
 	@FXML
-	private CheckBox Invi;
+	private CheckBox Invi; // the invisibility ability of the monster
 
 	/**
 	 * Update the value for each variable

@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 public class Player extends Moveable {
 	public static int PlayerX; // player coordinate x
 	public static int PlayerY; // player coordinate y
-	public static int nougat; // nouget
+	public static int nougat; // nougat
 	public static int calories; // Calories
 	public static int calories_cost; // Calories for each move
 	public static boolean result; // Game result
@@ -70,7 +70,7 @@ public class Player extends Moveable {
 	 */
 	private void checkNougats(int x, int y) {
 		Node nt = MainController.cell[x][y].getChildren().get(0);
-
+		// check if the player get new calories
 		if (nt instanceof Label) {
 			if (((Label) nt).getText().equals("     N")) {
 				calories = calories + nougat;
@@ -92,9 +92,11 @@ public class Player extends Moveable {
 		calories = calories - 50;
 		MainController.calories = calories;
 	}
-
+	/**
+	 * Move player to new place
+	 * */ 
 	public boolean movePlayer(String d, boolean playerCanMove, boolean shiftPressed, boolean ctrlPressed) {
-		int s = 1;
+		int s = 1; //the space the player can move
 		if (shiftPressed) {
 			s = 2;
 		}

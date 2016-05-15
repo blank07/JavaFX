@@ -2,12 +2,12 @@ package application;
 
 public class Monster extends Moveable {
 
-	public static int MonsterInitialX = 5;
-	public static int MonsterInitialY = 5;
-	public int MonsterX;
-	public int MonsterY;
-	public int visibilityCounter = 0;
-	public static boolean invisibleAllowed = false;
+	public static int MonsterInitialX = 5; //initial position(X) of the Monster
+	public static int MonsterInitialY = 5; //initial position(Y) of the Monster
+	public int MonsterX; // actual position(X) of the Monster
+	public int MonsterY; // actual position(Y) of the Monster
+	public int visibilityCounter = 0; //a counter used to determine the visibility of the Monster
+	public static boolean invisibleAllowed = false;// if the visibility allowed
 	
 	public Monster() {
 		MonsterX = MonsterInitialX;
@@ -22,7 +22,7 @@ public class Monster extends Moveable {
 			direction = MainController.LEAP;
 		}
 		
-		// 1 This will not be executed
+		// 1 This part will not be executed, if we do not want the monster to leap, we can changed it back
 		else if (pX % 5 == 0 && pX == MonsterX) {
 			if (pY < MonsterY) {
 				direction = MainController.UP;
@@ -38,7 +38,7 @@ public class Monster extends Moveable {
 				direction = MainController.LEFT;
 			}
 		}
-		// L
+		// Chasing Strategy L
 		else if (MonsterY % 5 == 0 && pX % 5 == 0) {
 			if (pX > MonsterX) {
 				direction = MainController.RIGHT;
@@ -55,7 +55,7 @@ public class Monster extends Moveable {
 			}
 		}
 
-		// Z
+		// Chasing Strategy Z
 		else if (MonsterY % 5 == 0 && pY % 5 == 0 && (pX - 5) * (MonsterX - 5) < 0) {
 			if (pX > MonsterX) {
 				direction = MainController.RIGHT;
@@ -71,7 +71,7 @@ public class Monster extends Moveable {
 				direction = MainController.DOWN;
 			}
 		}
-		// C
+		// Chasing Strategy C
 		else if (MonsterY % 5 == 0 && pY % 5 == 0 && (pX - 5) * (MonsterX - 5) > 0) {
 			if (MonsterX % 5 == 4) {
 				direction = MainController.RIGHT;

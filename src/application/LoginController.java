@@ -23,11 +23,11 @@ import javafx.stage.Stage;
 public class LoginController {
 	
 	@FXML
-	private Label lb;
+	private Label lb; //label to show the result
 	@FXML
-	private TextField uname;
+	private TextField uname; //Login user name
 	@FXML
-	private PasswordField pword;
+	private PasswordField pword; // Login user password
 	
 	public static String LoginUser;
 	public static String LoginUserScore;
@@ -126,7 +126,9 @@ public class LoginController {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	
+	/**
+	 * Action handler for set the Game Board Scene
+	 */
 	public void setMainScene() throws IOException{
 		Main.primaryStageLogin.hide();
 		Stage gameStage = new Stage();
